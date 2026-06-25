@@ -1,6 +1,6 @@
 from django.test import SimpleTestCase
 
-from apps.navigation import TIP_MAIN_NAV
+from apps.navigation import TIP_MAIN_NAV, TIP_SIDEBAR_NAV_GROUPS
 from apps.permissions import TIPPermission, TIPRole, permissions_for_role
 
 
@@ -37,3 +37,13 @@ class NavigationTests(SimpleTestCase):
         for item in TIP_MAIN_NAV:
             self.assertTrue(item["permission"])
             self.assertTrue(item["path"].startswith("/"))
+
+    def test_sidebar_groups_follow_user_journey(self):
+        self.assertEqual(
+            [group["label"] for group in TIP_SIDEBAR_NAV_GROUPS],
+            ["Visão Geral", "Operação", "Inteligência e Relatórios", "Administração"],
+        )
+        self.assertEqual(
+            [[item["label"] for item in group["items"]] for group in TIP_SIDEBAR_NAV_GROUPS],
+            [["Dashboard"], ["Integrações"], ["Análises", "Relatórios"], ["Configurações"]],
+        )

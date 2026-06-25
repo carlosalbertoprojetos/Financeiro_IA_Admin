@@ -3,6 +3,8 @@ from pathlib import Path
 
 from dotenv import load_dotenv
 
+from ai.openai_models import DEFAULT_OPENAI_MODEL
+
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 load_dotenv(BASE_DIR / ".env")
@@ -41,6 +43,7 @@ INSTALLED_APPS = [
     "apps.exports",
     "apps.users",
     "apps.settings",
+    "apps.intelligence",
 ]
 
 MIDDLEWARE = [
@@ -119,12 +122,58 @@ CELERY_TASK_SERIALIZER = "json"
 CELERY_RESULT_SERIALIZER = "json"
 CELERY_TIMEZONE = TIME_ZONE
 
+if os.environ.get("POCL_ENABLED", "false").lower() in ("true", "1", "yes"):
+    from celery.schedules import crontab
+
+    _pocl_board = os.environ.get("POCL_BOARD_ID", "")
+    CELERY_BEAT_SCHEDULE = {
+        "pocl-morning-cycle": {
+            "task": "intelligence.pocl_daily_cycle",
+            "schedule": crontab(hour=8, minute=0),
+            "kwargs": {"board_id": _pocl_board, "phase": "morning"},
+        },
+        "pocl-intraday-cycle": {
+            "task": "intelligence.pocl_daily_cycle",
+            "schedule": crontab(hour="9-18", minute=0),
+            "kwargs": {"board_id": _pocl_board, "phase": "intraday"},
+        },
+        "pocl-eod-cycle": {
+            "task": "intelligence.pocl_daily_cycle",
+            "schedule": crontab(hour=19, minute=0),
+            "kwargs": {"board_id": _pocl_board, "phase": "eod"},
+        },
+        "pocl-measure-followups": {
+            "task": "intelligence.pocl_measure_followups",
+            "schedule": crontab(minute="*/30"),
+            "kwargs": {"board_id": _pocl_board},
+        },
+    }
+
+REDIS_CACHE_URL = os.environ.get("REDIS_CACHE_URL", "")
+
+if REDIS_CACHE_URL:
+    CACHES = {
+        "default": {
+            "BACKEND": "django.core.cache.backends.redis.RedisCache",
+            "LOCATION": REDIS_CACHE_URL,
+            "KEY_PREFIX": "eor",
+            "TIMEOUT": 3600,
+        }
+    }
+else:
+    CACHES = {
+        "default": {
+            "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
+            "LOCATION": "eor-report-query",
+        }
+    }
+
 TRELLO_API_KEY = os.environ.get("TRELLO_API_KEY", "")
 TRELLO_API_TOKEN = os.environ.get("TRELLO_API_TOKEN", "")
 INTEGRATION_CREDENTIALS_KEY = os.environ.get("INTEGRATION_CREDENTIALS_KEY", "")
 INTEGRATION_QUEUE_BACKEND = os.environ.get("INTEGRATION_QUEUE_BACKEND", "local_db")
 OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY", "")
-OPENAI_MODEL = os.environ.get("OPENAI_MODEL", "gpt-4o-mini")
+OPENAI_MODEL = os.environ.get("OPENAI_MODEL", DEFAULT_OPENAI_MODEL)
 
 CORS_ALLOWED_ORIGINS = [
     origin.strip()

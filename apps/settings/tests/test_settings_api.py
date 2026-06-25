@@ -12,11 +12,13 @@ class SettingsServicesTests(TestCase):
         self.assertEqual(config.workspace_name, "Acme Ops")
 
     def test_openai_update_masks_in_overview(self):
-        update_openai(api_key="sk-test-key-1234", model="gpt-4o-mini")
+        update_openai(api_key="sk-test-key-1234", model="gpt-4.1-mini")
         overview = build_settings_overview()
         openai = overview["sections"]["openai"]
         self.assertTrue(openai["configured"])
         self.assertTrue(openai["api_key_masked"].endswith("1234"))
+        self.assertGreater(len(openai["available_models"]), 3)
+        self.assertEqual(openai["default_model"], "gpt-4.1-mini")
 
 
 class SettingsApiTests(TestCase):
@@ -42,11 +44,19 @@ class SettingsApiTests(TestCase):
     def test_patch_openai(self):
         response = self.client.patch(
             "/api/v1/settings/openai/",
-            {"api_key": "sk-abc", "model": "gpt-4o"},
+            {"api_key": "sk-abc", "model": "gpt-5.4-mini"},
             format="json",
         )
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.json()["model"], "gpt-4o")
+        self.assertEqual(response.json()["model"], "gpt-5.4-mini")
+
+    def test_patch_openai_rejects_unknown_model(self):
+        response = self.client.patch(
+            "/api/v1/settings/openai/",
+            {"model": "gpt-unknown"},
+            format="json",
+        )
+        self.assertEqual(response.status_code, 400)
 
     def test_trello_post_requires_credentials(self):
         response = self.client.post("/api/v1/settings/trello/", {}, format="json")

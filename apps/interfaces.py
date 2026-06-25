@@ -18,6 +18,12 @@ class TIPNavigationItem(TypedDict):
     icon: str
 
 
+class TIPNavigationGroup(TypedDict):
+    id: str
+    label: str
+    items: list[TIPNavigationItem]
+
+
 class TIPUserProfile(TypedDict):
     id: str
     username: str

@@ -13,4 +13,11 @@ urlpatterns = [
     path("exports/", include("apps.exports.urls")),
     path("users/", include("apps.users.urls")),
     path("settings/", include("apps.settings.urls")),
+    path("intelligence/", include("apps.intelligence.urls")),
+    path("traces/", include("apps.intelligence.traces_urls")),
+    path("evolution/", include("apps.intelligence.evolution_urls")),
+    path("actions/", include("apps.intelligence.actions_urls")),
+    path("learning/", include("apps.intelligence.learning_urls")),
+    path("value/", include("apps.intelligence.value_urls")),
+    path("pilot/", include("apps.intelligence.pilot_urls")),
 ]

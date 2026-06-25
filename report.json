@@ -1,0 +1,244 @@
+{
+  "meta": {
+    "board_id": "66c6308377ff5ddcb67c7fb9",
+    "report_type": "EXECUTIVO",
+    "matched_cards": 2,
+    "returned_cards": 2,
+    "filters": {
+      "board_id": "66c6308377ff5ddcb67c7fb9",
+      "period": "last_30_days",
+      "date_from": null,
+      "date_to": null,
+      "title_contains": "",
+      "title_prefix": "FINANCEIRO",
+      "labels": [],
+      "label_operator": "and",
+      "members": [
+        "Carlos"
+      ],
+      "member_role": "assignee",
+      "lists": [],
+      "status": [
+        "atrasado",
+        "bloqueado"
+      ],
+      "status_operator": "or",
+      "priority": [],
+      "checklist": null,
+      "risk_levels": [],
+      "score_range": null,
+      "report_type": "EXECUTIVO",
+      "export_format": "json",
+      "metrics": [
+        "LEAD_TIME",
+        "CYCLE_TIME",
+        "RISK_SCORE",
+        "SLA"
+      ],
+      "group_by": [
+        "LABELS",
+        "MEMBERS"
+      ],
+      "sort_by": "RISK_SCORE",
+      "sort_order": "DESC",
+      "limit": 100
+    },
+    "cache_hit": false,
+    "metrics_requested": [
+      "LEAD_TIME",
+      "CYCLE_TIME",
+      "RISK_SCORE",
+      "SLA"
+    ],
+    "group_by": [
+      "LABELS",
+      "MEMBERS"
+    ],
+    "sort": {
+      "by": "RISK_SCORE",
+      "order": "DESC"
+    },
+    "limit": 100,
+    "processing_ms": 37728
+  },
+  "data": {
+    "report_type": "EXECUTIVO",
+    "summary": "2 cards no subconjunto filtrado.",
+    "kpis": {
+      "lead_time": {
+        "count": 2,
+        "mean": -506.26,
+        "median": -506.26,
+        "p90": -582.63,
+        "min": -582.63,
+        "max": -429.89
+      },
+      "cycle_time": {
+        "count": 0,
+        "mean": 0.0,
+        "median": 0.0,
+        "p90": 0.0,
+        "min": 0.0,
+        "max": 0.0
+      },
+      "throughput": {
+        "total_completed": 2,
+        "periods": 2,
+        "average_per_period": 1
+      }
+    },
+    "operational_score": {
+      "score": 72,
+      "level": "Amarelo"
+    },
+    "top_risks": [
+      {
+        "card_id": "6a148271eefa11ee4bf5ef14",
+        "title": "[Financeiro] -  Alterar forma de exibição Balanço Diário - concluído 27/05/26",
+        "score": 0,
+        "level": "Baixo",
+        "factors": []
+      },
+      {
+        "card_id": "698e018cf140c56122fdf72e",
+        "title": "[Financeiro] -  Botões empresas contas a pagar  - concluído 02/06/26",
+        "score": 0,
+        "level": "Baixo",
+        "factors": []
+      }
+    ],
+    "filters": {
+      "board_id": "66c6308377ff5ddcb67c7fb9",
+      "date_range": {
+        "from": "2026-05-22T00:00:00-03:00",
+        "to": "2026-06-20T17:25:11.833401+00:00"
+      },
+      "initial_count": 18,
+      "matched_count": 2,
+      "filters_applied": {
+        "board_id": "66c6308377ff5ddcb67c7fb9",
+        "period": "last_30_days",
+        "date_from": null,
+        "date_to": null,
+        "title_contains": "",
+        "title_prefix": "FINANCEIRO",
+        "labels": [],
+        "label_operator": "and",
+        "members": [
+          "Carlos"
+        ],
+        "member_role": "assignee",
+        "lists": [],
+        "status": [
+          "atrasado",
+          "bloqueado"
+        ],
+        "status_operator": "or",
+        "priority": [],
+        "checklist": null,
+        "risk_levels": [],
+        "score_range": null,
+        "report_type": "EXECUTIVO",
+        "export_format": "json",
+        "metrics": [
+          "LEAD_TIME",
+          "CYCLE_TIME",
+          "RISK_SCORE",
+          "SLA"
+        ],
+        "group_by": [
+          "LABELS",
+          "MEMBERS"
+        ],
+        "sort_by": "RISK_SCORE",
+        "sort_order": "DESC",
+        "limit": 100
+      }
+    }
+  },
+  "metrics": {
+    "lead_time": {
+      "count": 2,
+      "avg": -506.26,
+      "min": -582.63,
+      "max": -429.89
+    },
+    "cycle_time": {
+      "count": 0,
+      "avg": null,
+      "min": null,
+      "max": null
+    },
+    "risk_score": {
+      "count": 2,
+      "avg": 0.0,
+      "min": 0,
+      "max": 0
+    },
+    "sla": {
+      "total": 2,
+      "on_time": 2,
+      "compliance_pct": 100.0
+    }
+  },
+  "grouped": {
+    "by_labels": [
+      {
+        "name": "Sem etiqueta",
+        "count": 2,
+        "avg_risk_score": 0.0,
+        "card_ids": [
+          "6a148271eefa11ee4bf5ef14",
+          "698e018cf140c56122fdf72e"
+        ]
+      }
+    ],
+    "by_members": [
+      {
+        "name": "Carlos_Alberto",
+        "count": 2,
+        "avg_risk_score": 0.0,
+        "card_ids": [
+          "6a148271eefa11ee4bf5ef14",
+          "698e018cf140c56122fdf72e"
+        ]
+      }
+    ]
+  },
+  "cards": [
+    {
+      "card_id": "6a148271eefa11ee4bf5ef14",
+      "title": "[Financeiro] -  Alterar forma de exibição Balanço Diário - concluído 27/05/26",
+      "status": "2026",
+      "labels": [],
+      "assignees": [
+        "Carlos_Alberto"
+      ],
+      "prefix": "FINANCEIRO",
+      "due_at": "2026-05-27T10:18:00+00:00",
+      "completed_at": "2026-05-27T10:18:00+00:00",
+      "lead_time_hours": -582.63,
+      "cycle_time_hours": null,
+      "risk_score": 0,
+      "risk_level": "Baixo",
+      "sla": "Cumprido"
+    },
+    {
+      "card_id": "698e018cf140c56122fdf72e",
+      "title": "[Financeiro] -  Botões empresas contas a pagar  - concluído 02/06/26",
+      "status": "Arquivar",
+      "labels": [],
+      "assignees": [
+        "Carlos_Alberto"
+      ],
+      "prefix": "FINANCEIRO",
+      "due_at": "2026-06-02T19:02:00+00:00",
+      "completed_at": "2026-06-02T19:02:00+00:00",
+      "lead_time_hours": -429.89,
+      "cycle_time_hours": null,
+      "risk_score": 0,
+      "risk_level": "Baixo",
+      "sla": "Cumprido"
+    }
+  ]
+}

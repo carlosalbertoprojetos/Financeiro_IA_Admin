@@ -6,7 +6,7 @@ from apps.integrations.core.exceptions import ConnectionNotFoundError
 from apps.integrations.trello.client import TrelloClient
 from apps.integrations.trello.connections import save_trello_connection
 from apps.integrations.trello.exceptions import TrelloAPIError
-from apps.navigation import TIP_MAIN_NAV
+from apps.navigation import TIP_MAIN_NAV, TIP_SIDEBAR_NAV_GROUPS
 from apps.settings.services import (
     build_settings_overview,
     update_openai,
@@ -108,10 +108,16 @@ class OpenAISettingsView(APIView):
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
-        update_openai(
-            api_key=str(api_key) if api_key is not None else None,
-            model=str(model) if model is not None else None,
-        )
+        try:
+            update_openai(
+                api_key=str(api_key) if api_key is not None else None,
+                model=str(model) if model is not None else None,
+            )
+        except ValueError as exc:
+            return Response(
+                {"status": "error", "error": str(exc)},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
         overview = build_settings_overview()
         return Response(overview["sections"]["openai"])
 
@@ -120,4 +126,4 @@ class NavigationView(APIView):
     """Server-driven navigation menu for TIP frontend."""
 
     def get(self, request):
-        return Response({"items": TIP_MAIN_NAV})
+        return Response({"items": TIP_MAIN_NAV, "groups": TIP_SIDEBAR_NAV_GROUPS})

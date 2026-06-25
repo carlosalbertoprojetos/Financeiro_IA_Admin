@@ -1,0 +1,80 @@
+{
+  "board_id": "66c6308377ff5ddcb67c7fb9",
+  "sync": {
+    "skipped": true,
+    "board_id": "66c6308377ff5ddcb67c7fb9"
+  },
+  "timeline": {
+    "total_events": 7194,
+    "event_types": [
+      "UNKNOWN",
+      "CARD_MOVED",
+      "UNKNOWN",
+      "CARD_MOVED",
+      "UNKNOWN",
+      "CARD_MOVED",
+      "CARD_MOVED",
+      "CARD_MOVED",
+      "CARD_MOVED",
+      "CARD_MOVED",
+      "UNKNOWN",
+      "UNKNOWN",
+      "UNKNOWN",
+      "UNKNOWN",
+      "UNKNOWN",
+      "UNKNOWN",
+      "UNKNOWN",
+      "UNKNOWN",
+      "UNKNOWN",
+      "UNKNOWN"
+    ],
+    "cards_with_events": 353,
+    "date_range": {
+      "from": "2024-08-21T18:23:00.206000+00:00",
+      "to": "2026-06-20T13:38:26.152000+00:00"
+    }
+  },
+  "semantic": {
+    "sample_size": 50,
+    "classified": 50,
+    "entity_type_distribution": {
+      "TASK": 9,
+      "DELIVERY": 33,
+      "PROJECT": 8
+    },
+    "classification_rate_pct": 100.0
+  },
+  "ole": {
+    "effectiveness_records": 0,
+    "patterns": {
+      "period_months": 12,
+      "board_id": "66c6308377ff5ddcb67c7fb9",
+      "most_effective_actions": [],
+      "least_effective_actions": [],
+      "action_combinations": [],
+      "total_records": 0
+    },
+    "playbooks_count": 0,
+    "playbooks_approved": []
+  },
+  "maturity": {
+    "eor_maturity_index": 27.5,
+    "components": {
+      "sla": 50.0,
+      "effectiveness": 0.0,
+      "risk": 50.0,
+      "productivity": 50.0,
+      "learning": 0
+    },
+    "evidence": {
+      "total_action_records": 0,
+      "organizational_memories": 0,
+      "lessons_learned": 0,
+      "playbook_candidates": 0
+    },
+    "board_id": "66c6308377ff5ddcb67c7fb9"
+  },
+  "query_sample": {
+    "error": "Query exceeded timeout of 120000ms"
+  }
+}

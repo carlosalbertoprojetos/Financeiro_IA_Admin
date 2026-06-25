@@ -1,14 +1,16 @@
-import { render, screen } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 
 import { ThemeProvider } from "@/shared/theme/ThemeProvider";
 import { ThemeToggle } from "@/shared/ui/ThemeToggle";
 
+const setTheme = vi.fn();
+
 vi.mock("next-themes", () => ({
   ThemeProvider: ({ children }: { children: React.ReactNode }) => <>{children}</>,
   useTheme: () => ({
     theme: "light",
-    setTheme: vi.fn(),
+    setTheme,
     resolvedTheme: "light",
   }),
 }));
@@ -25,12 +27,13 @@ describe("ThemeProvider", () => {
 });
 
 describe("ThemeToggle", () => {
-  it("renders theme selector with options", () => {
+  it("renders moon button in light mode and toggles to dark", () => {
     render(<ThemeToggle />);
-    const select = screen.getByLabelText("Tema da interface");
-    expect(select).toBeInTheDocument();
-    expect(screen.getByRole("option", { name: "Claro" })).toBeInTheDocument();
-    expect(screen.getByRole("option", { name: "Escuro" })).toBeInTheDocument();
-    expect(screen.getByRole("option", { name: "Sistema" })).toBeInTheDocument();
+
+    const button = screen.getByRole("button", { name: "Ativar tema escuro" });
+    expect(button).toBeInTheDocument();
+
+    fireEvent.click(button);
+    expect(setTheme).toHaveBeenCalledWith("dark");
   });
 });

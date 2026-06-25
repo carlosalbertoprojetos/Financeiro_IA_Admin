@@ -49,7 +49,7 @@ export default function SettingsView() {
   const [editing, setEditing] = useState<SettingsSectionId | null>(null);
   const [workspaceName, setWorkspaceName] = useState("");
   const [openaiKey, setOpenaiKey] = useState("");
-  const [openaiModel, setOpenaiModel] = useState("gpt-4o-mini");
+  const [openaiModel, setOpenaiModel] = useState("gpt-4.1-mini");
   const [saving, setSaving] = useState(false);
 
   const loadSettings = useCallback(async () => {
@@ -77,7 +77,8 @@ export default function SettingsView() {
     }
     if (id === "openai") {
       setOpenaiKey("");
-      setOpenaiModel(overview.sections.openai.model);
+      const section = overview.sections.openai;
+      setOpenaiModel(section.model || section.default_model || "gpt-4.1-mini");
     }
     setEditing(id);
   }
@@ -214,12 +215,26 @@ export default function SettingsView() {
           </label>
           <label className="block text-sm">
             <span className="font-medium text-muted-foreground">Modelo</span>
-            <input
+            <select
               className="mt-1 w-full rounded-lg border border-border-strong bg-surface px-3 py-2 text-foreground"
               value={openaiModel}
               onChange={(e) => setOpenaiModel(e.target.value)}
-              placeholder="gpt-4o-mini"
-            />
+            >
+              {(overview?.sections.openai.available_models || []).map((option) => (
+                <option key={option.id} value={option.id}>
+                  {option.label}
+                  {option.recommended ? " (recomendado)" : ""}
+                </option>
+              ))}
+            </select>
+            {overview?.sections.openai.available_models?.find((m) => m.id === openaiModel) ? (
+              <p className="mt-1 text-xs text-muted-foreground">
+                {
+                  overview.sections.openai.available_models.find((m) => m.id === openaiModel)
+                    ?.description
+                }
+              </p>
+            ) : null}
           </label>
         </div>
       </SettingEditModal>

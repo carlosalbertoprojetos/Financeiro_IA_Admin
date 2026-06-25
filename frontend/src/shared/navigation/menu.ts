@@ -6,6 +6,12 @@ export interface NavItem extends Omit<TIPNavigationItem, "path"> {
   href: string;
 }
 
+export interface NavGroup {
+  id: string;
+  label: string;
+  items: NavItem[];
+}
+
 const NAV_ICONS: Record<string, string> = {
   dashboard: "◫",
   integrations: "⎔",
@@ -26,3 +32,34 @@ export const MAIN_NAV: NavItem[] = TIP_APP_PAGES.map((page) => ({
   permission: page.permission as TIPPermissionKey,
   icon: navIconFor(page.id),
 }));
+
+function navItem(id: string): NavItem {
+  const item = MAIN_NAV.find((page) => page.id === id);
+  if (!item) {
+    throw new Error(`Navigation item not found: ${id}`);
+  }
+  return item;
+}
+
+export const SIDEBAR_NAV_GROUPS: NavGroup[] = [
+  {
+    id: "overview",
+    label: "Visão Geral",
+    items: [navItem("dashboard")],
+  },
+  {
+    id: "operation",
+    label: "Operação",
+    items: [navItem("integrations")],
+  },
+  {
+    id: "intelligence",
+    label: "Inteligência e Relatórios",
+    items: [navItem("analytics"), navItem("reports")],
+  },
+  {
+    id: "administration",
+    label: "Administração",
+    items: [navItem("settings")],
+  },
+];

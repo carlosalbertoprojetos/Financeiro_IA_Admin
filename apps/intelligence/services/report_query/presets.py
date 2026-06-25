@@ -1,0 +1,32 @@
+"""Report presets tuned to real board data."""
+
+EXECUTIVE_AQUI_DSL = """
+TYPE = EXECUTIVE
+PERIOD = LAST_30_DAYS
+LABELS = Financeiro AND Jurídico
+MEMBERS = Carlos
+TITLE_PREFIX = [AQUI]
+STATUS = (ATRASADO OR BLOQUEADO)
+METRICS = LEAD_TIME, CYCLE_TIME, RISK_SCORE, SLA
+GROUP_BY = LABELS, MEMBERS
+SORT = RISK_SCORE DESC
+LIMIT = 100
+""".strip()
+
+# Preset aligned with board "Original" (prefix [Financeiro] in titles, member Carlos_Alberto)
+EXECUTIVE_FINANCEIRO_DSL = """
+TYPE = EXECUTIVE
+PERIOD = LAST_30_DAYS
+TITLE_PREFIX = FINANCEIRO
+MEMBERS = Carlos
+STATUS = (ATRASADO OR BLOQUEADO)
+METRICS = LEAD_TIME, CYCLE_TIME, RISK_SCORE, SLA
+GROUP_BY = LABELS, MEMBERS
+SORT = RISK_SCORE DESC
+LIMIT = 100
+""".strip()
+
+PRESETS = {
+    "executive-aqui": EXECUTIVE_AQUI_DSL,
+    "executive-financeiro": EXECUTIVE_FINANCEIRO_DSL,
+}

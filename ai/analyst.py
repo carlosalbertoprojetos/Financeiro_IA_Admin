@@ -5,6 +5,7 @@ from typing import Any
 from django.conf import settings
 
 from ai.exceptions import AIAnalysisError, AIConfigurationError
+from ai.openai_models import DEFAULT_OPENAI_MODEL
 
 logger = logging.getLogger(__name__)
 
@@ -72,7 +73,7 @@ def analyze_metrics(
         client: Optional injected OpenAI client (for tests).
     """
     resolved_key = api_key or settings.OPENAI_API_KEY
-    resolved_model = model or getattr(settings, "OPENAI_MODEL", "gpt-4o-mini")
+    resolved_model = model or getattr(settings, "OPENAI_MODEL", DEFAULT_OPENAI_MODEL)
 
     if client is None and not resolved_key:
         raise AIConfigurationError("OPENAI_API_KEY must be configured")

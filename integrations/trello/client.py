@@ -48,6 +48,37 @@ class TrelloClient:
 
         return response.json()
 
+    def _post(self, path: str, params: dict[str, Any] | None = None) -> Any:
+        request_params = {**self._auth_params(), **(params or {})}
+        url = urljoin(self.BASE_URL, path.lstrip("/"))
+        try:
+            response = requests.post(url, params=request_params, timeout=30)
+        except requests.RequestException as exc:
+            raise TrelloAPIError(f"Trello request failed: {exc}") from exc
+        if response.status_code >= 400:
+            raise TrelloAPIError(f"Trello API error {response.status_code}: {response.text[:500]}")
+        return response.json()
+
+    def _put(self, path: str, params: dict[str, Any] | None = None) -> Any:
+        request_params = {**self._auth_params(), **(params or {})}
+        url = urljoin(self.BASE_URL, path.lstrip("/"))
+        try:
+            response = requests.put(url, params=request_params, timeout=30)
+        except requests.RequestException as exc:
+            raise TrelloAPIError(f"Trello request failed: {exc}") from exc
+        if response.status_code >= 400:
+            raise TrelloAPIError(f"Trello API error {response.status_code}: {response.text[:500]}")
+        return response.json()
+
+    def update_card(self, card_id: str, **fields: Any) -> dict[str, Any]:
+        return self._put(f"cards/{card_id}", params=fields)
+
+    def add_member_to_card(self, card_id: str, member_id: str) -> dict[str, Any]:
+        return self._post(f"cards/{card_id}/idMembers", params={"value": member_id})
+
+    def add_comment(self, card_id: str, text: str) -> dict[str, Any]:
+        return self._post(f"cards/{card_id}/actions/comments", params={"text": text})
+
     def get_board(self, board_id: str) -> dict[str, Any]:
         return self._get(
             f"boards/{board_id}",

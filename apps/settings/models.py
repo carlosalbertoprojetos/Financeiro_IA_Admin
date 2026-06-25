@@ -1,5 +1,6 @@
 from django.db import models
 
+from ai.openai_models import DEFAULT_OPENAI_MODEL
 from core.models import TimeStampedModel
 
 
@@ -10,7 +11,7 @@ class WorkspaceConfig(TimeStampedModel):
     workspace_name = models.CharField(max_length=255, blank=True, default="")
     timezone = models.CharField(max_length=64, default="America/Sao_Paulo")
     openai_api_key = models.TextField(blank=True, default="")
-    openai_model = models.CharField(max_length=64, default="gpt-4o-mini")
+    openai_model = models.CharField(max_length=64, default=DEFAULT_OPENAI_MODEL)
 
     class Meta:
         verbose_name = "Workspace configuration"

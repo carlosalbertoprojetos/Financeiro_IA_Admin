@@ -19,6 +19,14 @@ export interface TrelloSection {
   last_synced_at?: string | null;
 }
 
+export interface OpenAIModelOption {
+  id: string;
+  label: string;
+  description: string;
+  tier: string;
+  recommended: boolean;
+}
+
 export interface OpenAISection {
   id: "openai";
   label: string;
@@ -26,6 +34,8 @@ export interface OpenAISection {
   configured: boolean;
   source: "database" | "environment" | "none";
   model: string;
+  default_model: string;
+  available_models: OpenAIModelOption[];
   api_key_masked: string;
   editable: boolean;
 }

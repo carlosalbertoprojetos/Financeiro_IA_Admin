@@ -2,6 +2,7 @@ from typing import Any
 
 from django.conf import settings as django_settings
 
+from ai.openai_models import DEFAULT_OPENAI_MODEL, normalize_openai_model, openai_models_payload
 from apps.integrations.core.credentials import decrypt_value, encrypt_value
 from apps.integrations.models import IntegrationConnection
 from apps.integrations.trello.connections import get_account_connection, status_payload
@@ -23,7 +24,7 @@ def _openai_configured(config: WorkspaceConfig) -> bool:
 
 
 def _openai_model(config: WorkspaceConfig) -> str:
-    return config.openai_model or getattr(django_settings, "OPENAI_MODEL", "gpt-4o-mini")
+    return config.openai_model or getattr(django_settings, "OPENAI_MODEL", DEFAULT_OPENAI_MODEL)
 
 
 def _resolve_openai_key_display(config: WorkspaceConfig) -> str:
@@ -102,6 +103,8 @@ def build_settings_overview() -> dict[str, Any]:
                 "configured": _openai_configured(config),
                 "source": "database" if openai_from_db else ("environment" if openai_from_env else "none"),
                 "model": _openai_model(config),
+                "default_model": DEFAULT_OPENAI_MODEL,
+                "available_models": openai_models_payload(),
                 "api_key_masked": _mask_secret(_resolve_openai_key_display(config)),
                 "editable": True,
             },
@@ -122,6 +125,9 @@ def update_openai(*, api_key: str | None = None, model: str | None = None) -> Wo
         stripped = api_key.strip()
         config.openai_api_key = encrypt_value(stripped) if stripped else ""
     if model is not None:
-        config.openai_model = model.strip() or config.openai_model
+        try:
+            config.openai_model = normalize_openai_model(model)
+        except ValueError as exc:
+            raise ValueError(str(exc)) from exc
     config.save(update_fields=["openai_api_key", "openai_model", "updated_at"])
     return config
