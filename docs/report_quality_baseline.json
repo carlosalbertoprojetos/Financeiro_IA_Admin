@@ -1,0 +1,41 @@
+{
+  "baseline_date": "2026-06-27",
+  "eor_model": "1.1",
+  "minimum_scores": {
+    "DecisionValueScore": 100,
+    "ReportQualityScore": 82,
+    "ReportIntelligenceScore": 86,
+    "ExecutiveStoryQualityScore": 88
+  },
+  "required_sections": [
+    "contexto_periodo",
+    "principais_mudancas",
+    "fatores_resultado",
+    "causas_provaveis",
+    "impactos_operacionais",
+    "riscos_se_nada_mudar",
+    "oportunidades",
+    "decisoes_prioritarias",
+    "plano_acao"
+  ],
+  "required_exports": [
+    "json",
+    "markdown",
+    "pdf",
+    "pptx"
+  ],
+  "required_checks": [
+    "executive_story_present",
+    "top_3_drivers_present",
+    "decisions_with_evidence",
+    "actionable_recommendations",
+    "risks_prioritized",
+    "analytical_metrics_present",
+    "discovery_present",
+    "description_considered",
+    "no_empty_critical_sections",
+    "exports_carry_narrative",
+    "forecast_present",
+    "evidence_traceable"
+  ]
+}

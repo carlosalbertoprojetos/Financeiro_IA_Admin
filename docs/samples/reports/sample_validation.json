@@ -1,0 +1,135 @@
+{
+  "status": "PASS",
+  "decision_value_score": 100,
+  "classification": "executivo",
+  "checks": {
+    "executive_story_present": true,
+    "top_3_drivers_present": true,
+    "decisions_with_evidence": true,
+    "actionable_recommendations": true,
+    "risks_prioritized": true,
+    "analytical_metrics_present": true,
+    "discovery_present": true,
+    "description_considered": true,
+    "no_empty_critical_sections": true,
+    "exports_carry_narrative": true,
+    "forecast_present": true,
+    "evidence_traceable": true
+  },
+  "failures": [],
+  "warnings": [],
+  "stage_comparison": [
+    {
+      "stage": "base",
+      "metric_count": 6,
+      "evidence_count": 0,
+      "decision_count": 0,
+      "actionable_recommendation_count": 0,
+      "decision_value_score": 0,
+      "report_quality_score": 0,
+      "report_intelligence_score": 0,
+      "executive_story_quality_score": 0
+    },
+    {
+      "stage": "analytical_enrichment",
+      "metric_count": 40,
+      "evidence_count": 5,
+      "decision_count": 0,
+      "actionable_recommendation_count": 1,
+      "decision_value_score": 16,
+      "report_quality_score": 82,
+      "report_intelligence_score": 0,
+      "executive_story_quality_score": 0
+    },
+    {
+      "stage": "executive_narrative",
+      "metric_count": 10,
+      "evidence_count": 1,
+      "decision_count": 0,
+      "actionable_recommendation_count": 0,
+      "decision_value_score": 20,
+      "report_quality_score": 82,
+      "report_intelligence_score": 0,
+      "executive_story_quality_score": 0
+    },
+    {
+      "stage": "discovery",
+      "metric_count": 34,
+      "evidence_count": 6,
+      "decision_count": 0,
+      "actionable_recommendation_count": 2,
+      "decision_value_score": 36,
+      "report_quality_score": 82,
+      "report_intelligence_score": 86,
+      "executive_story_quality_score": 0
+    },
+    {
+      "stage": "executive_story",
+      "metric_count": 110,
+      "evidence_count": 27,
+      "decision_count": 3,
+      "actionable_recommendation_count": 3,
+      "decision_value_score": 95,
+      "report_quality_score": 82,
+      "report_intelligence_score": 86,
+      "executive_story_quality_score": 88
+    }
+  ],
+  "export_validation": {
+    "json": {
+      "present": true,
+      "carries_executive_blocks": true,
+      "content_type": null,
+      "size_bytes": 0,
+      "evidence": [
+        "executive_story presente no payload",
+        "discovery presente no payload",
+        "executive_narrative presente no payload"
+      ]
+    },
+    "markdown": {
+      "present": true,
+      "carries_executive_blocks": true,
+      "content_type": "text/markdown",
+      "size_bytes": 5697,
+      "evidence": [
+        "Executive Brief",
+        "História Executiva",
+        "Scorecard Executivo",
+        "Top 3 Drivers",
+        "Decisões Prioritárias",
+        "Plano de Ação"
+      ]
+    },
+    "pdf": {
+      "present": true,
+      "carries_executive_blocks": true,
+      "content_type": "application/pdf",
+      "size_bytes": 3695,
+      "evidence": [
+        "content_type=application/pdf",
+        "size_bytes=3695"
+      ]
+    },
+    "pptx": {
+      "present": true,
+      "carries_executive_blocks": true,
+      "content_type": "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+      "size_bytes": 47403,
+      "evidence": [
+        "Executive Brief",
+        "História Executiva",
+        "Scorecard Executivo",
+        "Top 3 Drivers",
+        "Decisões Prioritárias",
+        "Plano de Ação"
+      ]
+    }
+  },
+  "evidence_summary": {
+    "evidence_map": 4,
+    "driver_evidence": 3,
+    "decision_evidence": 3,
+    "recommendation_evidence": 1
+  }
+}

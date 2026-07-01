@@ -49,11 +49,15 @@ def _overdue_tasks(
     reference_time,
     limit: int = 20,
 ) -> dict[str, Any]:
-    overdue_queryset = (
+    due_queryset = (
         queryset.filter(due_date__isnull=False, due_date__lt=reference_time)
-        .exclude(metadata__contains={"closed": True})
         .order_by("due_date")
     )
+    overdue_records = [
+        task
+        for task in due_queryset
+        if not (isinstance(task.metadata, dict) and task.metadata.get("closed") is True)
+    ]
 
     items = [
         {
@@ -64,11 +68,11 @@ def _overdue_tasks(
             "source_provider": task.source_provider,
             "project_id": task.project_id,
         }
-        for task in overdue_queryset[:limit]
+        for task in overdue_records[:limit]
     ]
 
     return {
-        "count": overdue_queryset.count(),
+        "count": len(overdue_records),
         "items": items,
     }
 

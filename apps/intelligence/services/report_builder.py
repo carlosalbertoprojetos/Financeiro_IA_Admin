@@ -8,6 +8,7 @@ from django.utils import timezone
 
 from apps.intelligence.services.bottleneck_detector.detector import detect_bottlenecks
 from apps.intelligence.services.communication_analysis.analyzer import analyze_board_communication
+from apps.intelligence.services.description_intelligence.summary import aggregate_description_intelligence
 from apps.intelligence.services.executive_summary.agent import build_executive_summary
 from apps.intelligence.services.knowledge.extractor import get_knowledge_base
 from apps.intelligence.services.kpi.engine import compute_board_kpis
@@ -33,6 +34,9 @@ def build_executive_report(board_trello_id: str, *, use_ai: bool = True) -> dict
     score = compute_operational_score(board_trello_id=board_trello_id)
     knowledge = get_knowledge_base(board_trello_id)
     communications = analyze_board_communication(board_trello_id)
+    description_intelligence = aggregate_description_intelligence(
+        list(Card.objects.filter(board=board, is_removed=False).select_related("board_list")[:500])
+    )
 
     timeline = _build_board_timeline(board)
     checklists = _build_checklist_summary(board)
@@ -81,6 +85,30 @@ def build_executive_report(board_trello_id: str, *, use_ai: bool = True) -> dict
             "knowledge_base": knowledge,
             "ai_diagnosis": summary.get("ai_diagnosis"),
         },
+        "15_description_intelligence": {
+            "resumo_executivo_expandido": _build_expanded_description_summary(description_intelligence),
+            "classificacao_operacional": {
+                "quantidade_por_categoria": description_intelligence["categories"],
+                "quantidade_por_entidade": description_intelligence["entities_by_type"],
+                "eventos_extraidos": description_intelligence["events_by_type"],
+            },
+            "indicadores_operacionais_avancados": kpis.get("description_intelligence", {}).get("kpis", {}),
+            "dashboards": description_intelligence["dashboards"],
+            "qualidade": {
+                "description_quality_score": description_intelligence["avg_description_quality_score"],
+                "cards_com_descricao": description_intelligence["cards_with_description"],
+                "cards_analisados": description_intelligence["cards_analyzed"],
+            },
+            "rastreabilidade": [
+                {
+                    "card_id": analysis["card_id"],
+                    "title": analysis["card_title"],
+                    "summary": analysis["expanded_summary"],
+                    "quality": analysis["quality"],
+                }
+                for analysis in description_intelligence["analyses"][:50]
+            ],
+        },
     }
 
 
@@ -121,4 +149,16 @@ def _build_trends(board_trello_id: str, kpis: dict) -> dict[str, Any]:
         "score_trend": [{"date": h["created_at"], "score": h["score"]} for h in history],
         "throughput": kpis.get("throughput", {}),
         "aging": kpis.get("aging", {}),
+    }
+
+
+def _build_expanded_description_summary(description_intelligence: dict[str, Any]) -> dict[str, Any]:
+    summaries = [
+        analysis["expanded_summary"]
+        for analysis in description_intelligence.get("analyses", [])
+    ]
+    fields = ("objetivo", "contexto", "problema", "solucao", "resultado", "impacto")
+    return {
+        field: [summary[field] for summary in summaries if summary.get(field)][:10]
+        for field in fields
     }

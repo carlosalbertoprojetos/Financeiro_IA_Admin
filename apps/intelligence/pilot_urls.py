@@ -4,6 +4,7 @@ from apps.intelligence.views_pilot import (
     PilotActivateView,
     PilotDailyCycleView,
     PilotDecisionStreamView,
+    PilotDashboardView,
     PilotEvaluateView,
     PilotFeedbackView,
     PilotFollowupsView,
@@ -13,6 +14,7 @@ from apps.intelligence.views_pilot import (
 
 urlpatterns = [
     path("", PilotStatusView.as_view(), name="pilot-status"),
+    path("dashboard/", PilotDashboardView.as_view(), name="pilot-dashboard"),
     path("activate/", PilotActivateView.as_view(), name="pilot-activate"),
     path("stream/", PilotDecisionStreamView.as_view(), name="pilot-stream"),
     path("cycle/", PilotDailyCycleView.as_view(), name="pilot-cycle"),

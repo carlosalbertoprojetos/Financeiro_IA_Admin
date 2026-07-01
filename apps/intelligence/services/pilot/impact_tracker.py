@@ -59,12 +59,14 @@ def process_due_followups(*, board_id: str = "", limit: int = 50) -> dict[str, A
     )
     if board_id:
         qs = qs.filter(board_id=board_id)
-    results = {"measured": 0, "failed": 0, "details": []}
+    results = {"measured": 0, "skipped": 0, "failed": 0, "details": []}
     for followup in qs.order_by("scheduled_at")[:limit]:
         detail = measure_followup(followup.id)
         results["details"].append(detail)
         if detail.get("status") == "MEASURED":
             results["measured"] += 1
+        elif detail.get("status") == "SKIPPED":
+            results["skipped"] += 1
         else:
             results["failed"] += 1
     return results
@@ -82,6 +84,24 @@ def measure_followup(followup_id: int) -> dict[str, Any]:
     try:
         baseline = followup.baseline_json or {}
         measured = _capture_card_state(followup.card_id)
+        if not baseline.get("observed", True) or not measured.get("observed"):
+            reason = measured.get("reason") or baseline.get("reason") or "state_not_observed"
+            followup.measured_json = measured
+            followup.impact_json = {
+                "observed": False,
+                "reason": reason,
+                "message": "Impact was not measured because real card state was unavailable.",
+            }
+            followup.measured_at = timezone.now()
+            followup.status = ActionImpactFollowUp.Status.SKIPPED
+            followup.save()
+            return {
+                "status": "SKIPPED",
+                "followup_id": followup_id,
+                "window_hours": followup.window_hours,
+                "reason": reason,
+            }
+
         impact = measure_action_impact(
             before=baseline,
             after=measured,

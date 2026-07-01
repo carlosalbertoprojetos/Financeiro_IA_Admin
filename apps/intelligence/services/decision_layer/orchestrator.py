@@ -201,13 +201,14 @@ def execute_decision_action(
 
 def _capture_card_state(card_id: str) -> dict[str, Any]:
     if not card_id:
-        return {}
+        return {"observed": False, "reason": "missing_card_id"}
     card = Card.objects.filter(trello_id=card_id).first()
     if not card:
-        return {"card_id": card_id}
+        return {"card_id": card_id, "observed": False, "reason": "card_not_found"}
     assessment = assess_card_risk(card)
     return {
         "card_id": card_id,
+        "observed": True,
         "risk_score": assessment.score,
         "sla_breach_probability": assessment.score,
         "status": "COMPLETED" if card.is_closed else "OPEN",

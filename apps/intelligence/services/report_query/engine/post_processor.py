@@ -18,6 +18,7 @@ from apps.intelligence.services.report_query.domain.query_options import (
 from apps.intelligence.services.report_query.domain.title_parser import extract_prefix
 from apps.intelligence.services.report_query.engine.card_metrics import get_card_label_names
 from apps.intelligence.services.risk_engine.scorer import assess_card_risk
+from apps.intelligence.services.trello_card_intelligence import normalize_trello_card
 from integrations.trello.models import Card
 
 
@@ -83,6 +84,7 @@ def build_metrics_summary(rows: list[dict[str, Any]], metrics: list[ReportMetric
 
 def _card_base_row(card: Card) -> dict[str, Any]:
     assignees = [m.full_name or m.username or m.trello_id for m in card.assignees.all()]
+    normalized = normalize_trello_card(card).to_dict()
     return {
         "card_id": card.trello_id,
         "title": card.title,
@@ -92,6 +94,16 @@ def _card_base_row(card: Card) -> dict[str, Any]:
         "prefix": extract_prefix(card.title) or "",
         "due_at": card.due_at.isoformat() if card.due_at else None,
         "completed_at": card.completed_at.isoformat() if card.completed_at else None,
+        "description_sections": normalized["description_sections"],
+        "documentation_completeness_score": normalized["documentation_completeness_score"],
+        "description_links": normalized["links"],
+        "description_metrics": normalized["metrics"],
+        "description_risks_count": normalized["risks_count"],
+        "description_evidences_count": normalized["evidences_count"],
+        "checklist_total": normalized["checklist_total"],
+        "checklist_completed": normalized["checklist_completed"],
+        "checklist_completion_percent": normalized["checklist_completion_percent"],
+        "attachments_count": normalized["attachments_count"],
     }
 
 

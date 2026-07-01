@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { useAuth } from "@/shared/auth/AuthProvider";
 import { TIPRole, TIP_ROLE_LABELS, type TIPRoleKey } from "@/shared/roles";
@@ -17,10 +17,11 @@ export default function LoginPage() {
   const [error, setError] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
 
-  if (!isLoading && isAuthenticated) {
-    router.replace("/dashboard");
-    return null;
-  }
+  useEffect(() => {
+    if (!isLoading && isAuthenticated) {
+      router.replace("/dashboard");
+    }
+  }, [isAuthenticated, isLoading, router]);
 
   async function handleSubmit(event: React.FormEvent) {
     event.preventDefault();

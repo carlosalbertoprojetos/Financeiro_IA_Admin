@@ -17,7 +17,7 @@ Activate EOR as a **daily decision support system** on a real board, measuring c
 |-----------|---------|
 | Board | `POCL_BOARD_ID` env or `PilotConfig` record |
 | Team | `POCL_TEAM_NAME` |
-| Duration | 10 days |
+| Duration | 5 to 10 days |
 | Auto-execution | **DISABLED** (`DAL_AUTO_EXECUTION=false`) |
 
 ---
@@ -73,6 +73,10 @@ Trello event/sync
 
 Enable scheduler: `POCL_ENABLED=true` + Celery Beat worker.
 
+The pilot can only be activated for a board that already exists in the local
+Trello projection and is not closed. Run a real Trello sync first; POCL does not
+create synthetic boards or simulated metrics.
+
 ---
 
 ## API
@@ -112,6 +116,8 @@ python manage.py pocl evaluate --board-id BOARD_ID
 3. Rejections recorded as `IGNORED` feedback
 4. Approvals recorded as `ACCEPTED` feedback
 5. Modified actions recorded as `MODIFIED` via `/api/pilot/feedback/`
+6. Pilot duration must be 5-10 days
+7. Missing card state marks impact follow-up as `SKIPPED`; it is never inferred
 
 ---
 
@@ -123,6 +129,7 @@ python manage.py pocl evaluate --board-id BOARD_ID
 | Pilot success score | ≥70/100 |
 | Impact follow-ups measured | Real card state at T+24h/72h/7d |
 | BVE prediction error | Tracked in `estimated_vs_realized_json` |
+| Inferred impact | Not allowed |
 
 ---
 

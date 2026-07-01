@@ -1,6 +1,7 @@
 import type { AnalyticsResponse } from "./types";
+import { getApiBaseUrl } from "@/lib/api-url";
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:8000";
+const API_URL = getApiBaseUrl();
 
 export async function fetchAnalytics(
   params?: { projectId?: string; connectionId?: string },

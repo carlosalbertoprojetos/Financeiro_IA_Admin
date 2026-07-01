@@ -44,12 +44,17 @@ def generate_executive_daily_report(
         status="BLOCKED",
     ).count()
 
-    critical_ignored = DecisionFeedbackRecord.objects.filter(
+    ignored_feedback = DecisionFeedbackRecord.objects.filter(
         board_id=board_id,
         disposition=DecisionFeedbackRecord.Disposition.IGNORED,
         created_at__gte=day_start,
-        original_action_json__contains={"execution_mode": "SEMI_AUTOMATIC"},
-    ).count()
+    )
+    critical_ignored = sum(
+        1
+        for feedback in ignored_feedback
+        if isinstance(feedback.original_action_json, dict)
+        and feedback.original_action_json.get("execution_mode") == "SEMI_AUTOMATIC"
+    )
 
     followups_due = ActionImpactFollowUp.objects.filter(
         board_id=board_id,

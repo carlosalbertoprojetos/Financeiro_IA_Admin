@@ -6,6 +6,7 @@ from typing import Any
 from django.utils import timezone
 
 from apps.intelligence.services.report_query.domain.title_parser import extract_prefix
+from apps.intelligence.services.description_intelligence.summary import analyze_card_description
 from apps.intelligence.services.semantic_layer.entities import (
     BusinessEntity,
     EntityStatus,
@@ -34,12 +35,13 @@ def map_card_to_entity(card: Card, *, row: dict[str, Any] | None = None) -> Busi
     """Transform a card (+ optional metric row) into a business entity."""
     row = row or {}
     title = card.title or ""
-    category = _resolve_category(card, title)
+    description = analyze_card_description(card)
+    category = _resolve_category(card, title, description)
     entity_type = _infer_entity_type(card, title)
     status = _infer_entity_status(card, title)
     severity = _infer_severity(card, row, status)
     members = _extract_members(card, row)
-    risk_flags = detect_risk_flags(card, row)
+    risk_flags = [*detect_risk_flags(card, row), *_description_risk_flags(description)]
     intent = classify_operational_intent(card, entity_type)
     risk_score = float(row.get("risk_score", 0))
 
@@ -61,6 +63,13 @@ def map_card_to_entity(card: Card, *, row: dict[str, Any] | None = None) -> Busi
             "list": getattr(card.board_list, "name", None) if card.board_list_id else None,
             "due_at": card.due_at.isoformat() if card.due_at else None,
             "completed_at": card.completed_at.isoformat() if card.completed_at else None,
+            "description_intelligence": {
+                "quality_score": description["quality"]["score"],
+                "classifications": description["classifications"],
+                "entities": description["entities"],
+                "events": description["events"],
+                "expanded_summary": description["expanded_summary"],
+            },
         },
     )
 
@@ -105,14 +114,30 @@ def filter_entities(
     return result
 
 
-def _resolve_category(card: Card, title: str) -> str:
+def _resolve_category(card: Card, title: str, description: dict[str, Any] | None = None) -> str:
     prefix = extract_prefix(title)
     if prefix:
         return prefix
     labels = card.labels or []
     if labels and isinstance(labels[0], dict):
         return str(labels[0].get("name", "GERAL")).upper()
+    if description:
+        classifications = description.get("classifications") or []
+        if classifications and classifications[0].get("category") != "Outra":
+            return str(classifications[0]["category"]).upper()
     return "GERAL"
+
+
+def _description_risk_flags(description: dict[str, Any]) -> list[str]:
+    flags: list[str] = []
+    summary = description.get("expanded_summary") or {}
+    if summary.get("bloqueios"):
+        flags.append("description_blocker")
+    if summary.get("dependencias"):
+        flags.append("description_dependency")
+    if summary.get("impacto"):
+        flags.append("description_impact")
+    return flags
 
 
 def _infer_entity_type(card: Card, title: str) -> EntityType:

@@ -12,6 +12,13 @@ class IntegrationConnection(TimeStampedModel):
         CLICKUP = "clickup", "ClickUp"
 
     name = models.CharField(max_length=255, blank=True)
+    tenant = models.ForeignKey(
+        "core.Tenant",
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
+        related_name="integration_connections",
+    )
     provider = models.CharField(max_length=32, choices=Provider.choices, db_index=True)
     workspace_id = models.CharField(
         max_length=128,

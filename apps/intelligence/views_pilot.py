@@ -3,6 +3,14 @@ from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from apps.intelligence.models import (
+    ActionExecutionLog,
+    ActionImpactFollowUp,
+    BusinessValueRecordModel,
+    DecisionFeedbackRecord,
+    DecisionRecord,
+    ReportAuditLog,
+)
 from apps.intelligence.services.pilot.config import activate_pilot, pilot_status_summary
 from apps.intelligence.services.pilot.daily_cycle import run_daily_cycle
 from apps.intelligence.services.pilot.decision_stream import run_decision_stream
@@ -133,3 +141,71 @@ class PilotEvaluateView(APIView):
         metrics = compute_pilot_metrics(board_id=board_id)
         report_path = generate_pilot_evaluation_report(board_id=board_id)
         return Response({"metrics": metrics, "evaluation_report": report_path})
+
+
+class PilotDashboardView(APIView):
+    def get(self, request: Request) -> Response:
+        board_id = str(request.query_params.get("board_id", ""))
+        if not board_id:
+            return Response({"error": "board_id required"}, status=status.HTTP_400_BAD_REQUEST)
+
+        reports = ReportAuditLog.objects.filter(board_id=board_id)
+        decisions = DecisionRecord.objects.filter(board_id=board_id)
+        feedback = DecisionFeedbackRecord.objects.filter(board_id=board_id)
+        executions = ActionExecutionLog.objects.filter(decision_id__in=decisions.values("decision_id"))
+        followups = ActionImpactFollowUp.objects.filter(board_id=board_id)
+        value_records = BusinessValueRecordModel.objects.filter(board_id=board_id)
+
+        accepted = feedback.filter(disposition=DecisionFeedbackRecord.Disposition.ACCEPTED).count()
+        ignored = feedback.filter(disposition=DecisionFeedbackRecord.Disposition.IGNORED).count()
+        modified = feedback.filter(disposition=DecisionFeedbackRecord.Disposition.MODIFIED).count()
+        measured_followups = followups.filter(status=ActionImpactFollowUp.Status.MEASURED).count()
+        latest_report = reports.order_by("-created_at").first()
+
+        return Response({
+            **pilot_status_summary(board_id=board_id),
+            "board_id": board_id,
+            "usage": {
+                "reports_generated": reports.count(),
+                "exports_generated": reports.exclude(export_format="json").count(),
+                "last_report_at": latest_report.created_at.isoformat() if latest_report else "",
+            },
+            "decisions": {
+                "suggested": decisions.count(),
+                "accepted": accepted,
+                "ignored": ignored,
+                "modified": modified,
+                "pending": decisions.filter(status__in=["OPEN", "PENDING_APPROVAL"]).count(),
+            },
+            "risks": {
+                "detected": decisions.filter(priority__in=["HIGH", "ALTA", "CRITICAL", "CRITICA"]).count(),
+                "top": list(decisions.order_by("-score")[:5].values("decision_id", "priority", "score", "insight")),
+            },
+            "impact": {
+                "followups_scheduled": followups.filter(status=ActionImpactFollowUp.Status.SCHEDULED).count(),
+                "followups_measured": measured_followups,
+                "actions_executed": executions.filter(status="EXECUTED").count(),
+                "realized_benefit": sum(item.realized_benefit for item in value_records),
+                "avoided_loss": sum(item.avoided_loss for item in value_records),
+            },
+            "quality": {
+                "latest_report_quality_score": _summary_score(latest_report, "report_quality_score"),
+                "latest_decision_value_score": _summary_score(latest_report, "decision_value_score"),
+            },
+            "operating_mode": {
+                "dal_auto_execution": "false",
+                "human_approval_required": True,
+                "destructive_actions_allowed": False,
+                "feedback_required": True,
+            },
+        })
+
+
+def _summary_score(report: ReportAuditLog | None, key: str) -> int | float | None:
+    if not report:
+        return None
+    summary = report.result_summary or {}
+    value = summary.get(key)
+    if isinstance(value, dict):
+        return value.get("score")
+    return value

@@ -163,7 +163,7 @@ class IngestionEngine:
                     "status": task.status,
                     "due_date": task.due_date,
                     "project_id": task.project_id,
-                    "metadata": task.metadata,
+                    "metadata": task.metadata_with_canonical_fields(),
                 },
             )
             saved += 1

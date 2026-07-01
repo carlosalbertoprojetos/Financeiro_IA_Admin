@@ -44,15 +44,17 @@ def run_decision_stream(
     """
     ensure_human_in_loop()
     pilot = get_active_pilot(board_id=board_id)
+    if not pilot:
+        return {"status": "NO_ACTIVE_PILOT", "board_id": board_id, "decisions_generated": 0}
+
     cycle = None
-    if pilot:
-        cycle = PilotCycleRun.objects.create(
-            pilot=pilot,
-            board_id=board_id,
-            phase=PilotCycleRun.Phase.STREAM,
-            trigger=trigger,
-            status="RUNNING",
-        )
+    cycle = PilotCycleRun.objects.create(
+        pilot=pilot,
+        board_id=board_id,
+        phase=PilotCycleRun.Phase.STREAM,
+        trigger=trigger,
+        status="RUNNING",
+    )
 
     query_text = (EXECUTIVE_EQL if query_template == "executive" else RISK_EQL).format(limit=limit)
     summary: dict[str, Any] = {

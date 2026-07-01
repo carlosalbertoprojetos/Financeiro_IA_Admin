@@ -1,11 +1,19 @@
 from django.db import models
 
 from core.models import TimeStampedModel
+from core.tenant_queryset import TenantScopedManager, TenantScopedQuerySet
 
 
 class Board(TimeStampedModel):
     """Current state of a Trello board (mutable projection)."""
 
+    tenant = models.ForeignKey(
+        "core.Tenant",
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
+        related_name="trello_boards",
+    )
     trello_id = models.CharField(max_length=64, unique=True, db_index=True)
     name = models.CharField(max_length=255)
     description = models.TextField(blank=True)
@@ -15,6 +23,9 @@ class Board(TimeStampedModel):
 
     class Meta:
         ordering = ["name"]
+
+    objects = TenantScopedManager()
+    all_objects = models.Manager()
 
     def __str__(self) -> str:
         return self.name

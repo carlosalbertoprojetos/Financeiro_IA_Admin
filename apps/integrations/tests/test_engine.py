@@ -88,7 +88,17 @@ class BuiltInRegistryTests(TestCase):
 
         self.assertEqual(
             registry.list_providers(),
-            ["clickup", "jira", "trello"],
+            [
+                "asana",
+                "azure_devops",
+                "clickup",
+                "github_projects",
+                "jira",
+                "monday",
+                "notion",
+                "planner",
+                "trello",
+            ],
         )
 
     def test_jira_not_ready(self):

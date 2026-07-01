@@ -10,6 +10,10 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
+        migrations.RemoveConstraint(
+            model_name="tenantmembership",
+            name="unique_user_tenant_membership",
+        ),
         migrations.RemoveField(
             model_name="tenantmembership",
             name="tenant",

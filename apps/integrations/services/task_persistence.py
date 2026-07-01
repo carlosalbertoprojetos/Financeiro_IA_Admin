@@ -23,6 +23,22 @@ def canonical_task_from_payload(payload: dict[str, Any]) -> CanonicalTask:
         project_id=payload.get("project_id") or "",
         due_date=due_date,
         metadata=payload.get("metadata") or {},
+        description=payload.get("description") or (payload.get("metadata") or {}).get("description", ""),
+        structured_description=payload.get("structured_description") or (payload.get("metadata") or {}).get("structured_description") or {},
+        comments=payload.get("comments") or (payload.get("metadata") or {}).get("comments") or [],
+        actions=payload.get("actions") or (payload.get("metadata") or {}).get("actions") or [],
+        history=payload.get("history") or (payload.get("metadata") or {}).get("history") or [],
+        movements=payload.get("movements") or (payload.get("metadata") or {}).get("movements") or [],
+        checklists=payload.get("checklists") or (payload.get("metadata") or {}).get("checklists") or [],
+        attachments=payload.get("attachments") or (payload.get("metadata") or {}).get("attachments") or [],
+        members=payload.get("members") or (payload.get("metadata") or {}).get("members") or [],
+        assignees=payload.get("assignees") or (payload.get("metadata") or {}).get("assignees") or [],
+        watchers=payload.get("watchers") or (payload.get("metadata") or {}).get("watchers") or [],
+        labels=payload.get("labels") or (payload.get("metadata") or {}).get("labels") or [],
+        dates=payload.get("dates") or (payload.get("metadata") or {}).get("dates") or {},
+        derived_fields=payload.get("derived_fields") or (payload.get("metadata") or {}).get("derived_fields") or {},
+        evidence=payload.get("evidence") or (payload.get("metadata") or {}).get("evidence") or [],
+        raw=payload.get("raw") or (payload.get("metadata") or {}).get("raw") or {},
     )
 
 
@@ -44,6 +60,6 @@ def upsert_canonical_task(
             "status": task.status,
             "due_date": task.due_date,
             "project_id": task.project_id,
-            "metadata": task.metadata,
+            "metadata": task.metadata_with_canonical_fields(),
         },
     )

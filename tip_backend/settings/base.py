@@ -51,6 +51,7 @@ MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
+    "core.middleware.TenantContextMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
@@ -86,6 +87,9 @@ DATABASES = {
         "PASSWORD": os.environ.get("POSTGRES_PASSWORD", "tip_password"),
         "HOST": os.environ.get("POSTGRES_HOST", "localhost"),
         "PORT": os.environ.get("POSTGRES_PORT", "5432"),
+        "OPTIONS": {
+            "connect_timeout": int(os.environ.get("POSTGRES_CONNECT_TIMEOUT", "5")),
+        },
     }
 }
 
@@ -174,6 +178,13 @@ INTEGRATION_CREDENTIALS_KEY = os.environ.get("INTEGRATION_CREDENTIALS_KEY", "")
 INTEGRATION_QUEUE_BACKEND = os.environ.get("INTEGRATION_QUEUE_BACKEND", "local_db")
 OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY", "")
 OPENAI_MODEL = os.environ.get("OPENAI_MODEL", DEFAULT_OPENAI_MODEL)
+
+EOR_TEST_DATABASE_ENGINE = os.environ.get("EOR_TEST_DATABASE_ENGINE", "sqlite")
+if os.environ.get("EOR_TESTING", "").lower() in ("true", "1", "yes") and EOR_TEST_DATABASE_ENGINE == "sqlite":
+    DATABASES["default"] = {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": BASE_DIR / "test_eor.sqlite3",
+    }
 
 CORS_ALLOWED_ORIGINS = [
     origin.strip()

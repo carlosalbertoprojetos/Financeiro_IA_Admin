@@ -10,6 +10,8 @@ from django.utils import timezone
 from analytics.adapters import load_board_records
 from analytics.engine import metrics as metric_engine
 from analytics.services.builders import build_cards, build_gaps, build_overview, build_team
+from apps.intelligence.services.description_intelligence.summary import aggregate_description_intelligence
+from integrations.trello.models import Board, Card
 
 
 def compute_board_kpis(
@@ -44,6 +46,7 @@ def compute_board_kpis(
     list_dwell = _compute_list_dwell(cards)
     response_time = _compute_avg_response_time(actions)
     sla = _compute_sla_metrics(cards, reference_time=ref)
+    description_intelligence = _compute_description_intelligence(board_trello_id=board_trello_id, board_id=board_id)
 
     return {
         "board_id": board_trello_id or board_id,
@@ -66,6 +69,17 @@ def compute_board_kpis(
         "wip": overview.get("wip"),
         "backlog": overview.get("backlog"),
         "sla": sla,
+        "description_intelligence": description_intelligence,
+        "infrastructure_workload_index": description_intelligence["kpis"].get("infrastructure_workload_index", 0),
+        "maintenance_index": description_intelligence["kpis"].get("maintenance_index", 0),
+        "incident_density": description_intelligence["kpis"].get("incident_density", 0),
+        "correction_rate": description_intelligence["kpis"].get("correction_rate", 0),
+        "improvement_rate": description_intelligence["kpis"].get("improvement_rate", 0),
+        "preventive_vs_corrective_ratio": description_intelligence["kpis"].get("preventive_vs_corrective_ratio", 0),
+        "operational_complexity_score": description_intelligence["kpis"].get("operational_complexity_score", 0),
+        "description_completeness": description_intelligence["kpis"].get("description_completeness", 0),
+        "operational_documentation_score": description_intelligence["kpis"].get("operational_documentation_score", 0),
+        "knowledge_capture_score": description_intelligence["kpis"].get("knowledge_capture_score", 0),
     }
 
 
@@ -157,6 +171,25 @@ def _compute_sla_metrics(cards: list, *, reference_time: datetime) -> dict[str, 
         "on_time_pct": round(on_time / len(with_due) * 100, 1) if with_due else None,
         "breached": breached,
     }
+
+
+def _compute_description_intelligence(
+    *,
+    board_trello_id: str | None,
+    board_id: int | None,
+) -> dict[str, Any]:
+    board = None
+    if board_trello_id:
+        board = Board.objects.filter(trello_id=board_trello_id).first()
+    elif board_id:
+        board = Board.objects.filter(id=board_id).first()
+    if not board:
+        return {"cards_analyzed": 0, "kpis": {}}
+
+    cards = list(Card.objects.filter(board=board, is_removed=False).select_related("board_list")[:500])
+    intelligence = aggregate_description_intelligence(cards)
+    kpis = intelligence.get("dashboards", {}).get("executivo", {}).get("kpis", {})
+    return {**intelligence, "kpis": kpis}
 
 
 def _summary(values: list[float], metric: str) -> dict[str, Any]:

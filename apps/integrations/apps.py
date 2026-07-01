@@ -9,5 +9,14 @@ class IntegrationsConfig(AppConfig):
 
     def ready(self) -> None:
         # Import adapters so they self-register in the global registry.
-        from apps.integrations.adapters import clickup, jira  # noqa: F401
+        from apps.integrations.adapters import (  # noqa: F401
+            asana,
+            azure_devops,
+            clickup,
+            github_projects,
+            jira,
+            monday,
+            notion,
+            planner,
+        )
         from apps.integrations.trello import adapter  # noqa: F401

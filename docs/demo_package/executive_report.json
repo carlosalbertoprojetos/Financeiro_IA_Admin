@@ -1,0 +1,1146 @@
+{
+  "report_output_version": "2.0",
+  "executive_brief": {
+    "status_geral": "Atencao executiva",
+    "score_operacional": 50,
+    "kpis_principais": [
+      {
+        "metrica": "Cards analisados",
+        "valor": 8,
+        "status": "informativo",
+        "interpretacao": "8 cards no recorte analisado."
+      },
+      {
+        "metrica": "SLA compliance",
+        "valor": "50%",
+        "status": "critico",
+        "interpretacao": "Percentual calculado a partir dos cards com prazo."
+      },
+      {
+        "metrica": "Cards vencidos",
+        "valor": 4,
+        "status": "critico",
+        "interpretacao": "4 cards abertos vencidos."
+      },
+      {
+        "metrica": "Sem responsavel",
+        "valor": 3,
+        "status": "critico",
+        "interpretacao": "3 cards sem responsavel atribuido."
+      },
+      {
+        "metrica": "Descricoes incompletas",
+        "valor": 5,
+        "status": "critico",
+        "interpretacao": "5 cards com descricao curta ou insuficiente."
+      }
+    ],
+    "principais_problemas": [
+      {
+        "problema": "Incidente ERP financeiro vencido",
+        "evidencia": [
+          "Card vencido",
+          "SLA pressionado"
+        ],
+        "acao": "Tratar risco com dono e prazo."
+      },
+      {
+        "problema": "Integracao fiscal sem responsavel",
+        "evidencia": [
+          "Sem responsavel",
+          "Descricao incompleta"
+        ],
+        "acao": "Tratar risco com dono e prazo."
+      }
+    ],
+    "decisoes_recomendadas": [
+      {
+        "decisao": "Repriorizar cards vencidos.",
+        "evidencia": [
+          "4 cards vencidos"
+        ],
+        "urgencia": "alta",
+        "dono_sugerido": "Gestor operacional"
+      },
+      {
+        "decisao": "Atribuir responsaveis para cards sem dono.",
+        "evidencia": [
+          "3 cards sem responsavel"
+        ],
+        "urgencia": "alta",
+        "dono_sugerido": "Lider da equipe"
+      },
+      {
+        "decisao": "Exigir descricao minima.",
+        "evidencia": [
+          "5 descricoes incompletas"
+        ],
+        "urgencia": "media",
+        "dono_sugerido": "Lider da equipe"
+      }
+    ],
+    "proximas_acoes": [
+      {
+        "acao": "Replanejar cards vencidos.",
+        "dono": "Gestor operacional",
+        "prazo": "Hoje",
+        "resultado_esperado": "Reduzir risco de SLA.",
+        "evidencia": [
+          "4 cards vencidos"
+        ]
+      },
+      {
+        "acao": "Atribuir responsaveis para cards sem dono.",
+        "dono": "Lider da equipe",
+        "prazo": "24h",
+        "resultado_esperado": "Melhorar accountability.",
+        "evidencia": [
+          "3 cards sem responsavel"
+        ]
+      },
+      {
+        "acao": "Aplicar checklist minimo nas novas demandas.",
+        "dono": "Coordenador operacional",
+        "prazo": "7 dias",
+        "resultado_esperado": "Reduzir retrabalho de triagem.",
+        "evidencia": [
+          "5 descricoes incompletas"
+        ]
+      }
+    ],
+    "maior_risco": {
+      "risco": "Incidente ERP financeiro vencido",
+      "score": 82,
+      "evidencia": [
+        "Card vencido",
+        "SLA pressionado"
+      ],
+      "acao": "Tratar risco com dono e prazo."
+    },
+    "maior_oportunidade": {
+      "oportunidade": "Padronizar tratamento de incidentes vencidos",
+      "evidencia": [
+        "4 cards vencidos",
+        "categoria incidente recorrente"
+      ],
+      "acao": "Criar playbook de incidente com SLA, dono e checklist minimo.",
+      "confianca": 0.84
+    },
+    "summary": "Foram analisados 8 cards, com 4 vencidos, 3 sem responsavel e 5 com descricao incompleta. O score operacional ficou em 50/100, indicando onde a gestao deve priorizar replanejamento, ownership e qualidade de entrada."
+  },
+  "management_diagnosis": {
+    "historia_executiva_periodo": {
+      "summary": "O periodo analisou 8 cards da operacao de suporte B2B. O principal desvio foi a concentracao de 4 cards vencidos, combinada a 3 cards sem responsavel e 5 descricoes incompletas. Isso reduz previsibilidade, aumenta risco de SLA e obriga a gestao a decidir hoje quais incidentes serao replanejados, quem assume cada demanda e qual padrao minimo de abertura sera exigido.",
+      "evidence": [
+        {
+          "source": "metrics_pack.sla.overdue_open_cards",
+          "claim": "cards vencidos",
+          "evidence": "4"
+        },
+        {
+          "source": "metrics_pack.quality.incomplete_description_count",
+          "claim": "descricao",
+          "evidence": "5"
+        },
+        {
+          "source": "metrics_pack.quality.missing_owner_count",
+          "claim": "responsavel",
+          "evidence": "3"
+        }
+      ]
+    },
+    "principais_mudancas": [],
+    "top_3_drivers": [
+      {
+        "title": "Cards vencidos concentram risco operacional",
+        "explanation": "Metade do recorte esta vencida e ainda aberta, o que reduz previsibilidade e pressiona SLA.",
+        "evidence": [
+          "4 de 8 cards estao abertos e vencidos"
+        ],
+        "impact": 4,
+        "recommended_action": "Replanejar cards vencidos hoje.",
+        "confidence": 0.88,
+        "operational_impact": "fila critica permanece sem criterio de recuperacao",
+        "deadline_impact": "maior probabilidade de rompimento de SLA nas proximas 48h",
+        "productivity_impact": "gestores gastam mais tempo reagindo a urgencias",
+        "strategic_impact": "queda de confianca no controle operacional"
+      },
+      {
+        "title": "Descricoes incompletas limitam decisao",
+        "explanation": "Descricoes sem objetivo, prazo, dono ou proximo passo atrasam triagem e aumentam retrabalho.",
+        "evidence": [
+          "5 descricoes incompletas"
+        ],
+        "impact": 3,
+        "recommended_action": "Exigir descricao minima.",
+        "confidence": 0.82,
+        "operational_impact": "triagem depende de perguntas adicionais",
+        "deadline_impact": "decisoes ficam mais lentas quando o prazo ja esta pressionado",
+        "productivity_impact": "mais interrupcoes para recuperar contexto",
+        "strategic_impact": "menor qualidade de governanca sobre demandas criticas"
+      },
+      {
+        "title": "Cards sem responsavel reduzem accountability",
+        "explanation": "Demandas sem dono ficam sem acompanhamento claro e tendem a perder prioridade no fluxo.",
+        "evidence": [
+          "3 cards sem responsavel"
+        ],
+        "impact": 3,
+        "recommended_action": "Atribuir responsaveis.",
+        "confidence": 0.8,
+        "operational_impact": "execucao fica difusa e sem ponto unico de cobranca",
+        "deadline_impact": "prazos podem vencer sem escalonamento",
+        "productivity_impact": "a equipe duplica alinhamentos para descobrir ownership",
+        "strategic_impact": "responsabilizacao gerencial fica fragil"
+      }
+    ],
+    "analise_por_categoria": [],
+    "analise_por_membro": [],
+    "analise_prazo_sla": {
+      "summary": "",
+      "evidence": [],
+      "metrics": {
+        "overdue_open_cards": 4,
+        "cards_without_due_date": 2,
+        "cards_due_in_48h": 1,
+        "compliance_pct": 50
+      }
+    },
+    "gargalos": [],
+    "riscos": [
+      {
+        "rank": 1,
+        "title": "Incidente ERP financeiro vencido",
+        "score": 82,
+        "evidence": [
+          "Card vencido",
+          "SLA pressionado"
+        ],
+        "recommended_action": "Tratar risco com dono e prazo."
+      },
+      {
+        "rank": 2,
+        "title": "Integracao fiscal sem responsavel",
+        "score": 75,
+        "evidence": [
+          "Sem responsavel",
+          "Descricao incompleta"
+        ],
+        "recommended_action": "Tratar risco com dono e prazo."
+      }
+    ],
+    "causas_provaveis": [],
+    "recomendacoes": [
+      {
+        "acao": "Replanejar cards vencidos.",
+        "evidencia": [
+          "4 cards vencidos"
+        ],
+        "impacto": "Reduzir risco de SLA.",
+        "dono": "Gestor operacional",
+        "prazo": "Hoje"
+      },
+      {
+        "acao": "Atribuir responsaveis para cards sem dono.",
+        "evidencia": [
+          "3 cards sem responsavel"
+        ],
+        "impacto": "Melhorar accountability.",
+        "dono": "Lider da equipe",
+        "prazo": "24h"
+      },
+      {
+        "acao": "Aplicar checklist minimo nas novas demandas.",
+        "evidencia": [
+          "5 descricoes incompletas"
+        ],
+        "impacto": "Reduzir retrabalho de triagem.",
+        "dono": "Coordenador operacional",
+        "prazo": "7 dias"
+      },
+      {
+        "acao": "Criar playbook de incidente com SLA, dono e checklist minimo.",
+        "evidencia": [
+          "4 cards vencidos",
+          "categoria incidente recorrente"
+        ],
+        "impacto": null,
+        "dono": "Gestor operacional",
+        "prazo": "Proximo ciclo"
+      },
+      {
+        "acao": "Exigir objetivo, prazo, responsavel e proximo passo em novos cards.",
+        "evidencia": [
+          "5 descricoes incompletas"
+        ],
+        "impacto": null,
+        "dono": "Gestor operacional",
+        "prazo": "Proximo ciclo"
+      }
+    ]
+  },
+  "analytical_appendix": {
+    "tabelas_completas": {
+      "kpis_principais": [
+        {
+          "metrica": "Cards analisados",
+          "valor": 8,
+          "status": "informativo",
+          "variacao": "N/A",
+          "interpretacao": "Volume total do recorte analisado."
+        },
+        {
+          "metrica": "SLA compliance",
+          "valor": "50%",
+          "status": "critico",
+          "variacao": "N/A",
+          "interpretacao": "Quanto menor o compliance, maior a pressao de prazo."
+        },
+        {
+          "metrica": "Cards vencidos",
+          "valor": 4,
+          "status": "critico",
+          "variacao": "N/A",
+          "interpretacao": "Atrasos abertos exigem replanejamento e dono."
+        },
+        {
+          "metrica": "Sem responsavel",
+          "valor": 3,
+          "status": "critico",
+          "variacao": "N/A",
+          "interpretacao": "Cards sem dono reduzem accountability."
+        },
+        {
+          "metrica": "Comentarios",
+          "valor": 9,
+          "status": "informativo",
+          "variacao": "N/A",
+          "interpretacao": "Indica rastreabilidade de comunicacao no recorte."
+        }
+      ],
+      "top_categorias": [],
+      "top_membros": [],
+      "gargalos": [],
+      "decisoes": [
+        {
+          "decisao": "Repriorizar cards vencidos.",
+          "evidencia": "4 cards vencidos",
+          "impacto_esperado": "Atrasos abertos pressionam SLA.",
+          "urgencia": "alta",
+          "dono_sugerido": "Gestor operacional"
+        },
+        {
+          "decisao": "Atribuir responsaveis para cards sem dono.",
+          "evidencia": "3 cards sem responsavel",
+          "impacto_esperado": "Demandas sem owner perdem accountability e atrasam escalonamento.",
+          "urgencia": "alta",
+          "dono_sugerido": "Lider da equipe"
+        },
+        {
+          "decisao": "Exigir descricao minima.",
+          "evidencia": "5 descricoes incompletas",
+          "impacto_esperado": "Descricoes incompletas reduzem rastreabilidade.",
+          "urgencia": "media",
+          "dono_sugerido": "Lider da equipe"
+        }
+      ]
+    },
+    "dados_por_card": [
+      {
+        "card_id": "INC-ERP-042",
+        "title": "Incidente ERP financeiro vencido",
+        "status": "Em andamento",
+        "risk_score": 82
+      },
+      {
+        "card_id": "INT-FISCAL-017",
+        "title": "Integracao fiscal sem responsavel",
+        "status": "Backlog",
+        "risk_score": 75
+      }
+    ],
+    "evidencias": [
+      {
+        "source": "metrics_pack.sla.overdue_open_cards",
+        "claim": "cards vencidos",
+        "evidence": "4"
+      },
+      {
+        "source": "metrics_pack.quality.incomplete_description_count",
+        "claim": "descricao",
+        "evidence": "5"
+      },
+      {
+        "source": "metrics_pack.quality.missing_owner_count",
+        "claim": "responsavel",
+        "evidence": "3"
+      },
+      {
+        "source": "executive_brief.kpis",
+        "claim": "SLA compliance",
+        "evidence": "50%"
+      }
+    ],
+    "timeline": {},
+    "comentarios_relevantes": {
+      "total_comments": 9,
+      "cards_without_comments": 2
+    },
+    "checklists": [
+      {
+        "card_id": "INC-ERP-042",
+        "checklist_total": null,
+        "checklist_completed": null,
+        "checklist_pending": null,
+        "checklist_completion_percent": null
+      },
+      {
+        "card_id": "INT-FISCAL-017",
+        "checklist_total": null,
+        "checklist_completed": null,
+        "checklist_pending": null,
+        "checklist_completion_percent": null
+      }
+    ],
+    "descricoes_estruturadas": [
+      {
+        "card_id": "INC-ERP-042",
+        "description_sections": {},
+        "documentation_completeness_score": null
+      },
+      {
+        "card_id": "INT-FISCAL-017",
+        "description_sections": {},
+        "documentation_completeness_score": null
+      }
+    ],
+    "metricas_tecnicas": {
+      "metrics": {
+        "sla": {
+          "total": 8,
+          "compliance_pct": 50
+        }
+      },
+      "analytical_quality": {
+        "report_quality_score": 82,
+        "label": "bom"
+      },
+      "rankings": {
+        "top_10_categories": [],
+        "top_10_members": [],
+        "top_10_critical_cards": [
+          {
+            "rank": 1,
+            "card_id": "INC-ERP-042",
+            "title": "Incidente ERP financeiro vencido",
+            "risk_score": 82,
+            "evidence": [],
+            "recommended_action": null
+          },
+          {
+            "rank": 2,
+            "card_id": "INT-FISCAL-017",
+            "title": "Integracao fiscal sem responsavel",
+            "risk_score": 75,
+            "evidence": [],
+            "recommended_action": null
+          }
+        ],
+        "top_10_causes": [],
+        "top_10_risks": [
+          {
+            "rank": 1,
+            "title": "Incidente ERP financeiro vencido",
+            "score": 82,
+            "evidence": [
+              "Card vencido",
+              "SLA pressionado"
+            ],
+            "recommended_action": "Tratar risco com dono e prazo."
+          },
+          {
+            "rank": 2,
+            "title": "Integracao fiscal sem responsavel",
+            "score": 75,
+            "evidence": [
+              "Sem responsavel",
+              "Descricao incompleta"
+            ],
+            "recommended_action": "Tratar risco com dono e prazo."
+          }
+        ],
+        "top_10_opportunities": [
+          {
+            "rank": 1,
+            "title": "Padronizar tratamento de incidentes vencidos",
+            "evidence": [
+              "4 cards vencidos",
+              "categoria incidente recorrente"
+            ],
+            "recommended_action": "Criar playbook de incidente com SLA, dono e checklist minimo.",
+            "confidence": 0.84
+          },
+          {
+            "rank": 2,
+            "title": "Melhorar qualidade das descricoes",
+            "evidence": [
+              "5 descricoes incompletas"
+            ],
+            "recommended_action": "Exigir objetivo, prazo, responsavel e proximo passo em novos cards.",
+            "confidence": 0.82
+          }
+        ]
+      }
+    },
+    "limitations": [
+      "Comparacoes de variacao dependem de benchmark interno disponivel no payload.",
+      "PDF e PPTX priorizam leitura executiva; dados completos permanecem no JSON e no anexo analitico."
+    ]
+  },
+  "executive_tables": {
+    "kpis_principais": [
+      {
+        "metrica": "Cards analisados",
+        "valor": 8,
+        "status": "informativo",
+        "variacao": "N/A",
+        "interpretacao": "Volume total do recorte analisado."
+      },
+      {
+        "metrica": "SLA compliance",
+        "valor": "50%",
+        "status": "critico",
+        "variacao": "N/A",
+        "interpretacao": "Quanto menor o compliance, maior a pressao de prazo."
+      },
+      {
+        "metrica": "Cards vencidos",
+        "valor": 4,
+        "status": "critico",
+        "variacao": "N/A",
+        "interpretacao": "Atrasos abertos exigem replanejamento e dono."
+      },
+      {
+        "metrica": "Sem responsavel",
+        "valor": 3,
+        "status": "critico",
+        "variacao": "N/A",
+        "interpretacao": "Cards sem dono reduzem accountability."
+      },
+      {
+        "metrica": "Comentarios",
+        "valor": 9,
+        "status": "informativo",
+        "variacao": "N/A",
+        "interpretacao": "Indica rastreabilidade de comunicacao no recorte."
+      }
+    ],
+    "top_categorias": [],
+    "top_membros": [],
+    "gargalos": [],
+    "decisoes": [
+      {
+        "decisao": "Repriorizar cards vencidos.",
+        "evidencia": "4 cards vencidos",
+        "impacto_esperado": "Atrasos abertos pressionam SLA.",
+        "urgencia": "alta",
+        "dono_sugerido": "Gestor operacional"
+      },
+      {
+        "decisao": "Atribuir responsaveis para cards sem dono.",
+        "evidencia": "3 cards sem responsavel",
+        "impacto_esperado": "Demandas sem owner perdem accountability e atrasam escalonamento.",
+        "urgencia": "alta",
+        "dono_sugerido": "Lider da equipe"
+      },
+      {
+        "decisao": "Exigir descricao minima.",
+        "evidencia": "5 descricoes incompletas",
+        "impacto_esperado": "Descricoes incompletas reduzem rastreabilidade.",
+        "urgencia": "media",
+        "dono_sugerido": "Lider da equipe"
+      }
+    ]
+  },
+  "rankings": {
+    "top_10_categories": [],
+    "top_10_members": [],
+    "top_10_critical_cards": [
+      {
+        "rank": 1,
+        "card_id": "INC-ERP-042",
+        "title": "Incidente ERP financeiro vencido",
+        "risk_score": 82,
+        "evidence": [],
+        "recommended_action": null
+      },
+      {
+        "rank": 2,
+        "card_id": "INT-FISCAL-017",
+        "title": "Integracao fiscal sem responsavel",
+        "risk_score": 75,
+        "evidence": [],
+        "recommended_action": null
+      }
+    ],
+    "top_10_causes": [],
+    "top_10_risks": [
+      {
+        "rank": 1,
+        "title": "Incidente ERP financeiro vencido",
+        "score": 82,
+        "evidence": [
+          "Card vencido",
+          "SLA pressionado"
+        ],
+        "recommended_action": "Tratar risco com dono e prazo."
+      },
+      {
+        "rank": 2,
+        "title": "Integracao fiscal sem responsavel",
+        "score": 75,
+        "evidence": [
+          "Sem responsavel",
+          "Descricao incompleta"
+        ],
+        "recommended_action": "Tratar risco com dono e prazo."
+      }
+    ],
+    "top_10_opportunities": [
+      {
+        "rank": 1,
+        "title": "Padronizar tratamento de incidentes vencidos",
+        "evidence": [
+          "4 cards vencidos",
+          "categoria incidente recorrente"
+        ],
+        "recommended_action": "Criar playbook de incidente com SLA, dono e checklist minimo.",
+        "confidence": 0.84
+      },
+      {
+        "rank": 2,
+        "title": "Melhorar qualidade das descricoes",
+        "evidence": [
+          "5 descricoes incompletas"
+        ],
+        "recommended_action": "Exigir objetivo, prazo, responsavel e proximo passo em novos cards.",
+        "confidence": 0.82
+      }
+    ]
+  },
+  "commercial_report_score": {
+    "score": 60,
+    "target": 95,
+    "status": "WARNING",
+    "evidence": [
+      "Executive Brief estruturado",
+      "tabelas executivas obrigatorias",
+      "rankings executivos",
+      "anexo analitico com cards e evidencias"
+    ]
+  },
+  "layers": {
+    "1_executive_brief": {
+      "status_geral": "Atencao executiva",
+      "score_operacional": 50,
+      "kpis_principais": [
+        {
+          "metrica": "Cards analisados",
+          "valor": 8,
+          "status": "informativo",
+          "interpretacao": "8 cards no recorte analisado."
+        },
+        {
+          "metrica": "SLA compliance",
+          "valor": "50%",
+          "status": "critico",
+          "interpretacao": "Percentual calculado a partir dos cards com prazo."
+        },
+        {
+          "metrica": "Cards vencidos",
+          "valor": 4,
+          "status": "critico",
+          "interpretacao": "4 cards abertos vencidos."
+        },
+        {
+          "metrica": "Sem responsavel",
+          "valor": 3,
+          "status": "critico",
+          "interpretacao": "3 cards sem responsavel atribuido."
+        },
+        {
+          "metrica": "Descricoes incompletas",
+          "valor": 5,
+          "status": "critico",
+          "interpretacao": "5 cards com descricao curta ou insuficiente."
+        }
+      ],
+      "principais_problemas": [
+        {
+          "problema": "Incidente ERP financeiro vencido",
+          "evidencia": [
+            "Card vencido",
+            "SLA pressionado"
+          ],
+          "acao": "Tratar risco com dono e prazo."
+        },
+        {
+          "problema": "Integracao fiscal sem responsavel",
+          "evidencia": [
+            "Sem responsavel",
+            "Descricao incompleta"
+          ],
+          "acao": "Tratar risco com dono e prazo."
+        }
+      ],
+      "decisoes_recomendadas": [
+        {
+          "decisao": "Repriorizar cards vencidos.",
+          "evidencia": [
+            "4 cards vencidos"
+          ],
+          "urgencia": "alta",
+          "dono_sugerido": "Gestor operacional"
+        },
+        {
+          "decisao": "Atribuir responsaveis para cards sem dono.",
+          "evidencia": [
+            "3 cards sem responsavel"
+          ],
+          "urgencia": "alta",
+          "dono_sugerido": "Lider da equipe"
+        },
+        {
+          "decisao": "Exigir descricao minima.",
+          "evidencia": [
+            "5 descricoes incompletas"
+          ],
+          "urgencia": "media",
+          "dono_sugerido": "Lider da equipe"
+        }
+      ],
+      "proximas_acoes": [
+        {
+          "acao": "Replanejar cards vencidos.",
+          "dono": "Gestor operacional",
+          "prazo": "Hoje",
+          "resultado_esperado": "Reduzir risco de SLA.",
+          "evidencia": [
+            "4 cards vencidos"
+          ]
+        },
+        {
+          "acao": "Atribuir responsaveis para cards sem dono.",
+          "dono": "Lider da equipe",
+          "prazo": "24h",
+          "resultado_esperado": "Melhorar accountability.",
+          "evidencia": [
+            "3 cards sem responsavel"
+          ]
+        },
+        {
+          "acao": "Aplicar checklist minimo nas novas demandas.",
+          "dono": "Coordenador operacional",
+          "prazo": "7 dias",
+          "resultado_esperado": "Reduzir retrabalho de triagem.",
+          "evidencia": [
+            "5 descricoes incompletas"
+          ]
+        }
+      ],
+      "maior_risco": {
+        "risco": "Incidente ERP financeiro vencido",
+        "score": 82,
+        "evidencia": [
+          "Card vencido",
+          "SLA pressionado"
+        ],
+        "acao": "Tratar risco com dono e prazo."
+      },
+      "maior_oportunidade": {
+        "oportunidade": "Padronizar tratamento de incidentes vencidos",
+        "evidencia": [
+          "4 cards vencidos",
+          "categoria incidente recorrente"
+        ],
+        "acao": "Criar playbook de incidente com SLA, dono e checklist minimo.",
+        "confianca": 0.84
+      },
+      "summary": "Foram analisados 8 cards, com 4 vencidos, 3 sem responsavel e 5 com descricao incompleta. O score operacional ficou em 50/100, indicando onde a gestao deve priorizar replanejamento, ownership e qualidade de entrada."
+    },
+    "2_management_diagnosis": {
+      "historia_executiva_periodo": {
+        "summary": "O periodo analisou 8 cards da operacao de suporte B2B. O principal desvio foi a concentracao de 4 cards vencidos, combinada a 3 cards sem responsavel e 5 descricoes incompletas. Isso reduz previsibilidade, aumenta risco de SLA e obriga a gestao a decidir hoje quais incidentes serao replanejados, quem assume cada demanda e qual padrao minimo de abertura sera exigido.",
+        "evidence": [
+          {
+            "source": "metrics_pack.sla.overdue_open_cards",
+            "claim": "cards vencidos",
+            "evidence": "4"
+          },
+          {
+            "source": "metrics_pack.quality.incomplete_description_count",
+            "claim": "descricao",
+            "evidence": "5"
+          },
+          {
+            "source": "metrics_pack.quality.missing_owner_count",
+            "claim": "responsavel",
+            "evidence": "3"
+          }
+        ]
+      },
+      "principais_mudancas": [],
+      "top_3_drivers": [
+        {
+          "title": "Cards vencidos concentram risco operacional",
+          "explanation": "Metade do recorte esta vencida e ainda aberta, o que reduz previsibilidade e pressiona SLA.",
+          "evidence": [
+            "4 de 8 cards estao abertos e vencidos"
+          ],
+          "impact": 4,
+          "recommended_action": "Replanejar cards vencidos hoje.",
+          "confidence": 0.88,
+          "operational_impact": "fila critica permanece sem criterio de recuperacao",
+          "deadline_impact": "maior probabilidade de rompimento de SLA nas proximas 48h",
+          "productivity_impact": "gestores gastam mais tempo reagindo a urgencias",
+          "strategic_impact": "queda de confianca no controle operacional"
+        },
+        {
+          "title": "Descricoes incompletas limitam decisao",
+          "explanation": "Descricoes sem objetivo, prazo, dono ou proximo passo atrasam triagem e aumentam retrabalho.",
+          "evidence": [
+            "5 descricoes incompletas"
+          ],
+          "impact": 3,
+          "recommended_action": "Exigir descricao minima.",
+          "confidence": 0.82,
+          "operational_impact": "triagem depende de perguntas adicionais",
+          "deadline_impact": "decisoes ficam mais lentas quando o prazo ja esta pressionado",
+          "productivity_impact": "mais interrupcoes para recuperar contexto",
+          "strategic_impact": "menor qualidade de governanca sobre demandas criticas"
+        },
+        {
+          "title": "Cards sem responsavel reduzem accountability",
+          "explanation": "Demandas sem dono ficam sem acompanhamento claro e tendem a perder prioridade no fluxo.",
+          "evidence": [
+            "3 cards sem responsavel"
+          ],
+          "impact": 3,
+          "recommended_action": "Atribuir responsaveis.",
+          "confidence": 0.8,
+          "operational_impact": "execucao fica difusa e sem ponto unico de cobranca",
+          "deadline_impact": "prazos podem vencer sem escalonamento",
+          "productivity_impact": "a equipe duplica alinhamentos para descobrir ownership",
+          "strategic_impact": "responsabilizacao gerencial fica fragil"
+        }
+      ],
+      "analise_por_categoria": [],
+      "analise_por_membro": [],
+      "analise_prazo_sla": {
+        "summary": "",
+        "evidence": [],
+        "metrics": {
+          "overdue_open_cards": 4,
+          "cards_without_due_date": 2,
+          "cards_due_in_48h": 1,
+          "compliance_pct": 50
+        }
+      },
+      "gargalos": [],
+      "riscos": [
+        {
+          "rank": 1,
+          "title": "Incidente ERP financeiro vencido",
+          "score": 82,
+          "evidence": [
+            "Card vencido",
+            "SLA pressionado"
+          ],
+          "recommended_action": "Tratar risco com dono e prazo."
+        },
+        {
+          "rank": 2,
+          "title": "Integracao fiscal sem responsavel",
+          "score": 75,
+          "evidence": [
+            "Sem responsavel",
+            "Descricao incompleta"
+          ],
+          "recommended_action": "Tratar risco com dono e prazo."
+        }
+      ],
+      "causas_provaveis": [],
+      "recomendacoes": [
+        {
+          "acao": "Replanejar cards vencidos.",
+          "evidencia": [
+            "4 cards vencidos"
+          ],
+          "impacto": "Reduzir risco de SLA.",
+          "dono": "Gestor operacional",
+          "prazo": "Hoje"
+        },
+        {
+          "acao": "Atribuir responsaveis para cards sem dono.",
+          "evidencia": [
+            "3 cards sem responsavel"
+          ],
+          "impacto": "Melhorar accountability.",
+          "dono": "Lider da equipe",
+          "prazo": "24h"
+        },
+        {
+          "acao": "Aplicar checklist minimo nas novas demandas.",
+          "evidencia": [
+            "5 descricoes incompletas"
+          ],
+          "impacto": "Reduzir retrabalho de triagem.",
+          "dono": "Coordenador operacional",
+          "prazo": "7 dias"
+        },
+        {
+          "acao": "Criar playbook de incidente com SLA, dono e checklist minimo.",
+          "evidencia": [
+            "4 cards vencidos",
+            "categoria incidente recorrente"
+          ],
+          "impacto": null,
+          "dono": "Gestor operacional",
+          "prazo": "Proximo ciclo"
+        },
+        {
+          "acao": "Exigir objetivo, prazo, responsavel e proximo passo em novos cards.",
+          "evidencia": [
+            "5 descricoes incompletas"
+          ],
+          "impacto": null,
+          "dono": "Gestor operacional",
+          "prazo": "Proximo ciclo"
+        }
+      ]
+    },
+    "3_analytical_appendix": {
+      "tabelas_completas": {
+        "kpis_principais": [
+          {
+            "metrica": "Cards analisados",
+            "valor": 8,
+            "status": "informativo",
+            "variacao": "N/A",
+            "interpretacao": "Volume total do recorte analisado."
+          },
+          {
+            "metrica": "SLA compliance",
+            "valor": "50%",
+            "status": "critico",
+            "variacao": "N/A",
+            "interpretacao": "Quanto menor o compliance, maior a pressao de prazo."
+          },
+          {
+            "metrica": "Cards vencidos",
+            "valor": 4,
+            "status": "critico",
+            "variacao": "N/A",
+            "interpretacao": "Atrasos abertos exigem replanejamento e dono."
+          },
+          {
+            "metrica": "Sem responsavel",
+            "valor": 3,
+            "status": "critico",
+            "variacao": "N/A",
+            "interpretacao": "Cards sem dono reduzem accountability."
+          },
+          {
+            "metrica": "Comentarios",
+            "valor": 9,
+            "status": "informativo",
+            "variacao": "N/A",
+            "interpretacao": "Indica rastreabilidade de comunicacao no recorte."
+          }
+        ],
+        "top_categorias": [],
+        "top_membros": [],
+        "gargalos": [],
+        "decisoes": [
+          {
+            "decisao": "Repriorizar cards vencidos.",
+            "evidencia": "4 cards vencidos",
+            "impacto_esperado": "Atrasos abertos pressionam SLA.",
+            "urgencia": "alta",
+            "dono_sugerido": "Gestor operacional"
+          },
+          {
+            "decisao": "Atribuir responsaveis para cards sem dono.",
+            "evidencia": "3 cards sem responsavel",
+            "impacto_esperado": "Demandas sem owner perdem accountability e atrasam escalonamento.",
+            "urgencia": "alta",
+            "dono_sugerido": "Lider da equipe"
+          },
+          {
+            "decisao": "Exigir descricao minima.",
+            "evidencia": "5 descricoes incompletas",
+            "impacto_esperado": "Descricoes incompletas reduzem rastreabilidade.",
+            "urgencia": "media",
+            "dono_sugerido": "Lider da equipe"
+          }
+        ]
+      },
+      "dados_por_card": [
+        {
+          "card_id": "INC-ERP-042",
+          "title": "Incidente ERP financeiro vencido",
+          "status": "Em andamento",
+          "risk_score": 82
+        },
+        {
+          "card_id": "INT-FISCAL-017",
+          "title": "Integracao fiscal sem responsavel",
+          "status": "Backlog",
+          "risk_score": 75
+        }
+      ],
+      "evidencias": [
+        {
+          "source": "metrics_pack.sla.overdue_open_cards",
+          "claim": "cards vencidos",
+          "evidence": "4"
+        },
+        {
+          "source": "metrics_pack.quality.incomplete_description_count",
+          "claim": "descricao",
+          "evidence": "5"
+        },
+        {
+          "source": "metrics_pack.quality.missing_owner_count",
+          "claim": "responsavel",
+          "evidence": "3"
+        },
+        {
+          "source": "executive_brief.kpis",
+          "claim": "SLA compliance",
+          "evidence": "50%"
+        }
+      ],
+      "timeline": {},
+      "comentarios_relevantes": {
+        "total_comments": 9,
+        "cards_without_comments": 2
+      },
+      "checklists": [
+        {
+          "card_id": "INC-ERP-042",
+          "checklist_total": null,
+          "checklist_completed": null,
+          "checklist_pending": null,
+          "checklist_completion_percent": null
+        },
+        {
+          "card_id": "INT-FISCAL-017",
+          "checklist_total": null,
+          "checklist_completed": null,
+          "checklist_pending": null,
+          "checklist_completion_percent": null
+        }
+      ],
+      "descricoes_estruturadas": [
+        {
+          "card_id": "INC-ERP-042",
+          "description_sections": {},
+          "documentation_completeness_score": null
+        },
+        {
+          "card_id": "INT-FISCAL-017",
+          "description_sections": {},
+          "documentation_completeness_score": null
+        }
+      ],
+      "metricas_tecnicas": {
+        "metrics": {
+          "sla": {
+            "total": 8,
+            "compliance_pct": 50
+          }
+        },
+        "analytical_quality": {
+          "report_quality_score": 82,
+          "label": "bom"
+        },
+        "rankings": {
+          "top_10_categories": [],
+          "top_10_members": [],
+          "top_10_critical_cards": [
+            {
+              "rank": 1,
+              "card_id": "INC-ERP-042",
+              "title": "Incidente ERP financeiro vencido",
+              "risk_score": 82,
+              "evidence": [],
+              "recommended_action": null
+            },
+            {
+              "rank": 2,
+              "card_id": "INT-FISCAL-017",
+              "title": "Integracao fiscal sem responsavel",
+              "risk_score": 75,
+              "evidence": [],
+              "recommended_action": null
+            }
+          ],
+          "top_10_causes": [],
+          "top_10_risks": [
+            {
+              "rank": 1,
+              "title": "Incidente ERP financeiro vencido",
+              "score": 82,
+              "evidence": [
+                "Card vencido",
+                "SLA pressionado"
+              ],
+              "recommended_action": "Tratar risco com dono e prazo."
+            },
+            {
+              "rank": 2,
+              "title": "Integracao fiscal sem responsavel",
+              "score": 75,
+              "evidence": [
+                "Sem responsavel",
+                "Descricao incompleta"
+              ],
+              "recommended_action": "Tratar risco com dono e prazo."
+            }
+          ],
+          "top_10_opportunities": [
+            {
+              "rank": 1,
+              "title": "Padronizar tratamento de incidentes vencidos",
+              "evidence": [
+                "4 cards vencidos",
+                "categoria incidente recorrente"
+              ],
+              "recommended_action": "Criar playbook de incidente com SLA, dono e checklist minimo.",
+              "confidence": 0.84
+            },
+            {
+              "rank": 2,
+              "title": "Melhorar qualidade das descricoes",
+              "evidence": [
+                "5 descricoes incompletas"
+              ],
+              "recommended_action": "Exigir objetivo, prazo, responsavel e proximo passo em novos cards.",
+              "confidence": 0.82
+            }
+          ]
+        }
+      },
+      "limitations": [
+        "Comparacoes de variacao dependem de benchmark interno disponivel no payload.",
+        "PDF e PPTX priorizam leitura executiva; dados completos permanecem no JSON e no anexo analitico."
+      ]
+    }
+  },
+  "evidence_policy": {
+    "no_invented_data": true,
+    "all_analytical_claims_reference_metrics_or_evidence": true,
+    "limitations_are_explicit": true
+  }
+}

@@ -4,8 +4,9 @@ import type {
   TrelloSection,
   WorkspaceSection,
 } from "./types";
+import { getApiBaseUrl } from "@/lib/api-url";
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:8000";
+const API_URL = getApiBaseUrl();
 const BASE = `${API_URL}/api/v1/settings`;
 
 async function requestJson<T>(url: string, init?: RequestInit): Promise<T> {

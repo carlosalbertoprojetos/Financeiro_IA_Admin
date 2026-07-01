@@ -5,8 +5,9 @@ import type {
   OverviewResponse,
   ProductivityResponse,
 } from "./types";
+import { getApiBaseUrl } from "./api-url";
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:8000";
+const API_URL = getApiBaseUrl();
 
 function buildUrl(path: string, params: Record<string, string>): string {
   const url = new URL(`${API_URL}${path}`);

@@ -8,10 +8,15 @@ from django.utils import timezone
 
 from apps.intelligence.models import PilotConfig
 from apps.intelligence.services.decision_layer.guards.rules import is_auto_execution_enabled
+from integrations.trello.models import Board
 
 
 class PilotConfigurationError(Exception):
     pass
+
+
+MIN_PILOT_DAYS = 5
+MAX_PILOT_DAYS = 10
 
 
 def ensure_human_in_loop() -> None:
@@ -21,6 +26,28 @@ def ensure_human_in_loop() -> None:
             "DAL_AUTO_EXECUTION must be false during operational pilot. "
             "Set DAL_AUTO_EXECUTION=false in environment."
         )
+
+
+def validate_pilot_scope(*, board_id: str, team_name: str, duration_days: int) -> Board:
+    """Validate POCL real-world scope: one active board, one real team, 5-10 days."""
+    if not board_id.strip():
+        raise PilotConfigurationError("POCL requires one active board_id.")
+    if not team_name.strip():
+        raise PilotConfigurationError("POCL requires one real operational team_name.")
+    if duration_days < MIN_PILOT_DAYS or duration_days > MAX_PILOT_DAYS:
+        raise PilotConfigurationError(
+            f"POCL duration must be between {MIN_PILOT_DAYS} and {MAX_PILOT_DAYS} days."
+        )
+
+    board = Board.objects.filter(trello_id=board_id).first()
+    if not board:
+        raise PilotConfigurationError(
+            "POCL board must exist in the local Trello projection. "
+            "Run a real Trello sync before activating the pilot."
+        )
+    if board.closed:
+        raise PilotConfigurationError("POCL board must be active, not closed.")
+    return board
 
 
 def get_active_pilot(*, board_id: str = "") -> PilotConfig | None:
@@ -50,13 +77,18 @@ def activate_pilot(
     config: dict[str, Any] | None = None,
 ) -> PilotConfig:
     ensure_human_in_loop()
+    board = validate_pilot_scope(
+        board_id=board_id,
+        team_name=team_name,
+        duration_days=duration_days,
+    )
     PilotConfig.objects.filter(board_id=board_id, status=PilotConfig.Status.ACTIVE).update(
         status=PilotConfig.Status.COMPLETED,
     )
     now = timezone.now()
     return PilotConfig.objects.create(
         board_id=board_id,
-        board_name=board_name,
+        board_name=board_name or board.name,
         team_name=team_name,
         status=PilotConfig.Status.ACTIVE,
         started_at=now,
@@ -65,6 +97,9 @@ def activate_pilot(
             "human_in_the_loop": True,
             "auto_execution": False,
             "duration_days": duration_days,
+            "real_mode": True,
+            "observed_impact_only": True,
+            "board_last_synced_at": board.last_synced_at.isoformat() if board.last_synced_at else "",
             **(config or {}),
         },
     )

@@ -1,3 +1,5 @@
+import { getApiBaseUrl } from "@/lib/api-url";
+
 export interface TIPUser {
   id: string;
   username: string;
@@ -33,7 +35,7 @@ export function clearSession(): void {
 }
 
 export async function loginDemo(username: string, role = "admin"): Promise<AuthSession> {
-  const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:8000";
+  const apiUrl = getApiBaseUrl();
 
   try {
     const response = await fetch(`${apiUrl}/api/v1/users/login/`, {

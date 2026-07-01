@@ -603,3 +603,41 @@ class ActionImpactFollowUp(TimeStampedModel):
 
     def __str__(self) -> str:
         return f"FollowUp {self.decision_id} @ {self.window_hours}h ({self.status})"
+
+
+class CustomerOnboardingState(TimeStampedModel):
+    """Persistent onboarding state used to measure time to first value."""
+
+    class Step(models.TextChoices):
+        ACCOUNT = "account", "Account"
+        ORGANIZATION = "organization", "Organization"
+        TRELLO_TOKEN = "trello_token", "Trello token"
+        CONNECTION_TEST = "connection_test", "Connection test"
+        INITIAL_SYNC = "initial_sync", "Initial sync"
+        BOARD_DISCOVERY = "board_discovery", "Board discovery"
+        BOARD_SELECTION = "board_selection", "Board selection"
+        INDEXING = "indexing", "Indexing"
+        FIRST_ANALYSIS = "first_analysis", "First analysis"
+        FIRST_EXECUTIVE_REPORT = "first_executive_report", "First executive report"
+        COMPLETED = "completed", "Completed"
+
+    tenant = models.OneToOneField(
+        "core.Tenant",
+        on_delete=models.CASCADE,
+        related_name="onboarding_state",
+    )
+    current_step = models.CharField(max_length=64, choices=Step.choices, default=Step.ACCOUNT, db_index=True)
+    trello_token_validated = models.BooleanField(default=False)
+    boards_discovered = models.JSONField(default=list, blank=True)
+    boards_selected = models.JSONField(default=list, blank=True)
+    initial_sync_completed = models.BooleanField(default=False)
+    first_report_generated = models.BooleanField(default=False)
+    completed_at = models.DateTimeField(null=True, blank=True)
+    errors_json = models.JSONField(default=list, blank=True)
+
+    class Meta:
+        db_table = "customer_onboarding_state"
+        ordering = ["tenant_id"]
+
+    def __str__(self) -> str:
+        return f"Onboarding tenant={self.tenant_id} step={self.current_step}"

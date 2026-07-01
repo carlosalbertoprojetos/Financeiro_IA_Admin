@@ -1,0 +1,88 @@
+{
+  "pdf": {
+    "status": "PASS",
+    "checks": {
+      "opens_correctly": true,
+      "pagination": true,
+      "sections": [
+        "Anexos",
+        "Capa",
+        "Decisoes",
+        "Diagnostico",
+        "Evidencias",
+        "Executive Brief",
+        "KPIs",
+        "Plano de Acao",
+        "Rankings",
+        "Riscos",
+        "Scorecard",
+        "Sumario",
+        "Top Drivers"
+      ],
+      "section_count": 13
+    },
+    "failures": []
+  },
+  "pptx": {
+    "status": "PASS",
+    "checks": {
+      "opens_in_powerpoint_package": true,
+      "slides_editable": true,
+      "elements_positioned": true,
+      "slide_count": 12,
+      "required_slides": [
+        "Capa",
+        "Decisões",
+        "Encerramento",
+        "Executive Brief",
+        "Gargalos",
+        "KPIs",
+        "Operational Scorecard",
+        "Oportunidades",
+        "Plano de Ação",
+        "Próximos Passos",
+        "Riscos",
+        "Top 3 Drivers"
+      ]
+    },
+    "failures": []
+  },
+  "xlsx": {
+    "status": "PASS",
+    "checks": {
+      "opens_in_excel_package": true,
+      "formulas_valid": true,
+      "filters": true,
+      "freeze_panes": true,
+      "required_sheets": [
+        "Base Completa",
+        "Cards",
+        "Categorias",
+        "Checklists",
+        "Comentarios",
+        "Evidencias",
+        "Executive Brief",
+        "KPIs",
+        "Membros",
+        "SLA",
+        "Timeline"
+      ]
+    },
+    "failures": []
+  },
+  "docx": {
+    "status": "PASS",
+    "checks": {
+      "opens_in_word_package": true,
+      "styles_preserved": true,
+      "sections": [
+        "Executive Brief",
+        "KPIs",
+        "Decisoes",
+        "Plano de Acao",
+        "Evidencias"
+      ]
+    },
+    "failures": []
+  }
+}
